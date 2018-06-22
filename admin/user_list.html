@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户个人列表</title>
+    <script src="js/vue.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <style>
+        .mid{width: 100%; height:30px;border-bottom: 1px solid #eff2f7}
+        .con{width: 100%;height:850px;}
+        .toolbar{background-color:#f2f2f2;margin-top:15px;height:60px}
+        .toolbar_from{padding-top:7px}
+        .tab{width: 100% ;border-bottom: none;position: absolute;margin-top:95px}
+        .tab table{width: 100%;text-align: center;border-collapse:collapse;border: 1px solid #dfe6ec}
+        .tab tr{width: 100%;height:55px;border-bottom:1px solid #dfe6ec}
+        .tr_head{background-color:#eef1f6}
+        .tab tr td{height:54px;}
+    </style>
+    <script language="JavaScript">
+        $.getJSON("ctrl/user_list.php", function(data) {
+            var html = '';
+            for (var i = 0; i < data.length; i++) {
+                html += '<tr>' +
+                    '<td>' + '<el-checkbox v-model="checked"></el-checkbox>' + "</td>" +
+                    '<td>' + data[i].user_id + "</td>" +
+                    "<td>" + data[i].user_name + "</td>" +
+                    "<td>" + data[i].user_pwd + "</td>" +
+                    "<td>" +
+                        "<el-button size=\"small\" @click=\"dialogVisible = true\">编辑</el-button>" +
+                        "<el-button type=\"danger\" size=\"small\" href='deleteuser_list.php?userid=\" + data[i].user_id + \"'>删除</el-button>" +
+                    "</td>" +
+                    "</tr>";
+            }
+            $('#clum').html(html);
+        });
+    </script>
+</head>
+<body>
+<div id="app">
+    <div class="mid">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
+            <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+            <el-breadcrumb-item>用户个人信息</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+    <div class="con">
+        <el-col :span="24" class="toolbar">
+            <el-form :inline="true" class="toolbar_from">
+                <el-form-item>
+                    <el-input  placeholder="姓名"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary">查询</el-button>
+                </el-form-item>
+                <!--<el-form-item>-->
+                    <!--<el-button type="primary">新增</el-button>-->
+                <!--</el-form-item>-->
+            </el-form>
+        </el-col>
+        <div class="tab">
+            <table>
+                <tr class="tr_head">
+                    <th><el-checkbox v-model="checked"></el-checkbox></th>
+                    <th>#</th>
+                    <th>邮箱</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>地址</th>
+                    <th>操作</th>
+                </tr>
+                <tr>
+                    <td><el-checkbox v-model="checked"></el-checkbox></td>
+                    <td>1</td>
+                    <td>635732955@qq.com</td>
+                    <td>Hugh Kim</td>
+                    <td>男</td>
+                    <td>天津市</td>
+                    <td>
+                        <el-button size="small" @click="dialogVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small" >删除</el-button>
+                    </td>
+                </tr>
+
+                <tbody id="clum"></tbody>
+            </table>
+
+
+            <el-col :span="24" class="toolbar">
+                <el-button type="danger" style="margin-top: 8px">批量删除</el-button>
+            </el-col>
+
+        </div>
+
+
+        <el-dialog :visible.sync="dialogVisible" width="50%" >
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="序号" prop="number">
+                    <el-input v-model="ruleForm.number"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" prop="email">
+                    <el-input v-model="ruleForm.email"></el-input>
+                </el-form-item>
+                <el-form-item label="姓名" prop="name">
+                    <el-input v-model="ruleForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="性别" prop="sex">
+                    <el-input v-model="ruleForm.sex"></el-input>
+                </el-form-item>
+                <el-form-item label="地址" prop="address">
+                    <el-input v-model="ruleForm.address"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="submitForm('ruleForm')" >确认修改</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+                <!--<el-button @click="dialogTableVisible = false">取 消</el-button>-->
+                <!--<el-button type="primary" @click="dialogTableVisible = false">确 定</el-button>-->
+        </span>
+        </el-dialog>
+
+
+
+
+    </div>
+</div>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            checked:false,
+            dialogVisible: false,
+            ruleForm: {
+                number:'',
+                email:'',
+                name: '',
+                sex:'',
+                address: '',
+            },
+            rules: {
+                number: [
+                    { required: true, message: '请输入序号', trigger: 'blur' }
+                ],
+                email: [
+                    { required: true, message: '请输入用户邮箱', trigger: 'blur' }
+                ],
+                name: [
+                    { required: true, message: '请输入用户姓名', trigger: 'blur' }
+                ],
+                sex:[
+                    { required: true, message: '请输入用户性别', trigger: 'blur' }
+                ],
+                address: [
+                    { required: true, message: '请输入用户地址', trigger: 'blur' }
+                ],
+            }
+        },
+        methods: {
+            submitForm:function(formName) {
+                this.$refs[formName].validate(function(valid){
+                    if (valid) {
+//                        this.dialogTableVisible= !this.dialogTableVisible,
+                        alert('提交成功');
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            resetForm:function(formName) {
+                this.$refs[formName].resetFields();
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>

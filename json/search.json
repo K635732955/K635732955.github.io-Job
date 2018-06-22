@@ -1,0 +1,11 @@
+[
+  {"id":1,"initial":"qd","keyword":"前端"},
+  {"id":2,"initial":"qdkf","keyword":"前端开发"},
+  {"id":3,"initial":"qdvue","keyword":"前端vue"},
+  {"id":4,"initial":"qdgj","keyword":"前端工具"},
+  {"id":5,"initial":"qddsj","keyword":"前端大数据"},
+  {"id":6,"initial":"qdjs","keyword":"前端计算"},
+  {"id":7,"initial":"qdjava","keyword":"前端java"},
+  {"id":8,"initial":"qdjg","keyword":"前端架构"},
+  {"id":9,"initial":"qdcs","keyword":"前端测试"}
+]

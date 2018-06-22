@@ -1,0 +1,234 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登陆注册</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        body{background-color: white}
+        ul{list-style: none;}
+        ul li{float: left}
+        input{outline: none}
+        .all{width: 100%;height: 600px}
+        .container_one{width: 100%;height:360px;background-color:#00b38a}
+        .container_one .con_top{width: 705px;height: 42px;margin: auto;position: relative;top: 76px}
+        .container_one .con_top img{width:112px;height: 100%}
+        .container_one .con_bot{width:705px;height: 440px;margin: auto;padding: 62px 70px 68px 78px;z-index: 1;position: relative;background-color: #fff;top:113px;border-radius: 2px;border: 1px solid #dce1e6;display: flex;justify-content: space-between; }
+        .container_one .bot_l{width:290px;height:305px;}
+        .container_one .bot_l .bot_head{line-height:28px;text-align: center;color:#333;position: relative;height: 33px;border-bottom: 1px solid #00b38a;width:150px;margin: 0 auto 29px;font-size: 22px}
+        .container_one .bot_l input{padding-left: 10px;border: none;width: 100%;font-size: 14px;height: 44px;color: #333;border-bottom: 1px solid #ededed;margin-bottom:33px}
+        .container_one .bot_l .forget{cursor: pointer;color:#00b38a;width: 100%;height: 20px;text-align: right;font-size: 14px;margin-bottom:18px}
+        .container_one .bot_l .login{cursor: pointer;width: 100%;height:45px;color: white;font-size:18px;line-height:45px;background-color:#00b38a;text-align: center}
+        .container_one .bot_m{width:110px;height:305px;}
+        .container_one .bot_m .line{width: 1px;height:100%;border: 1px dashed #ededed;margin: auto}
+        .container_one .bot_r{width:152px;height:214px;padding-top: 26px;}
+        .container_one .bot_r h5{margin: 44px 0 8px;color: #555;font-size: 14px;font-weight: 400;}
+        .container_one .bot_r div{height: 22px;font-size:18px;color: #00b38a;padding-right: 23px;}
+        .container_one .bot_r div:hover{text-decoration: underline;cursor: pointer}
+        .container_one .bot_r ul{margin-left: -5px;width: 152px;height: 20px;margin-top: 12px;text-align: center;padding: 0}
+        .container_one .bot_r ul li{width:38px;height: 20px;float: left;}
+        .container_one .bot_r ul li img{cursor: pointer}
+        /*-----------------------------------------------------------------------*/
+        .container_two{width: 100%;height:360px;background-color:#00b38a}
+        .container_two .con_top{width: 705px;height: 42px;margin: auto;position: relative;top: 76px}
+        .container_two .con_top img{width:112px;height: 100%}
+        .container_two .con_bot{width:705px;height: 440px;margin: auto;padding: 62px 70px 68px 78px;z-index: 1;position: relative;background-color: #fff;top:113px;border-radius: 2px;border: 1px solid #dce1e6;display: flex;justify-content: space-between; }
+        .container_two .bot_l{width:290px;height:305px;position: relative;z-index: 999}
+        .container_two .bot_l .bot_head{font-size: 16px;line-height:28px;color:#333;position: relative;height: 33px;width:100%;margin-bottom: 29px;text-align: left;padding-left:8px}
+        .container_two .bot_l input{padding-left: 10px;border: none;font-size: 14px;color: #333;}
+        .container_two .bot_l .pho{height: 44px;border-bottom: 1px solid #ededed;width: 100%;margin-bottom: 30px}
+        .container_two .bot_l .cre{height: 44px;border-bottom: 1px solid #ededed;margin-bottom: 30px}
+        .container_two .bot_l .cre input{width: 50%;float: left;height:98%}
+        .container_two .bot_l .cre #code{font-size:23px;color: #2e6da4;letter-spacing:4px;text-align:center;width:50%;float: left;height:95%;cursor: pointer;background: transparent;border:1px solid #ededed;}
+        .container_two .bot_l .code{height: 44px;border-bottom: 1px solid #ededed;}
+        .container_two .bot_l .code input{width: 50%;float: left;height: 100%;}
+        .container_two .bot_l #btn{text-align: center;color:#00b38a;cursor: pointer;background-color: transparent;font-size:18px}
+        .container_two .bot_l .login{margin:30px 0 5px;cursor: pointer;width: 100%;height:45px;color: white;font-size:18px;line-height:45px;background-color:#00b38a;text-align: center}
+        .container_two .bot_l .msg{width: 100%;height: 20px;color: #999;text-align: center;font-size: 14px}
+        .container_two .bot_l .msg span{color: #00b38a;}
+        .container_two .bot_m{width:110px;height:305px;}
+        .container_two .bot_m .line{width: 1px;height:100%;border: 1px dashed #ededed;margin: auto}
+        .container_two .bot_r{width:152px;height:214px;padding-top: 26px;}
+        .container_two .bot_r h5{margin: 44px 0 8px;color: #555;font-size: 14px;font-weight: 400;}
+        .container_two .bot_r div{height: 22px;font-size:18px;color: #00b38a;padding-right: 23px;}
+        .container_two .bot_r div:hover{text-decoration: underline;cursor: pointer}
+        .container_two .bot_r ul{margin-left: -5px;width: 152px;height: 20px;margin-top: 12px;text-align: center;padding: 0}
+        .container_two .bot_r ul li{width:38px;height: 20px;float: left;}
+        .container_two .bot_r ul li img{cursor: pointer}
+        /*------------------------------------------------------------*/
+        #zza{position: absolute;color: red;margin-left:10px;margin-top: 11px;display: none;}
+        #zzb{position: absolute;color: red;margin-left:10px;margin-top: 11px;display: none;}
+        .login:active{opacity: 0.8}
+
+
+    </style>
+</head>
+<body onload='createCode()'>
+<div id="app">
+    <div class="all">
+        <div class="container_one" v-show="login">
+            <div class="con_top">
+                <img src="image/enrol_log.png">
+            </div>
+            <div class="con_bot">
+                <div class="bot_l">
+                    <div class="bot_head">用户登陆</div>
+                    <div id="zza">手机号邮箱不能为空</div>
+                    <input type="text" placeholder="请输入手机号/邮箱" id="phone">
+                    <div id="zzb">密码不能为空</div>
+                    <input type="text" placeholder="请输入密码" id="pwd">
+                    <div class="forget">忘记密码？</div>
+                    <div class="login denglu">登陆</div>
+                </div>
+                <div class="bot_m">
+                    <div class="line"></div>
+                </div>
+                <div class="bot_r">
+                    <h5>还没有账号:</h5>
+                    <div @click="reg()">立即注册 <span class="glyphicon glyphicon-circle-arrow-right"></span></div>
+                    <h5>使用以下账号直接登陆:</h5>
+                    <ul>
+                        <li><img src="image/新浪.png"></li>
+                        <li><img src="image/微信.png"></li>
+                        <li><img src="image/qq.png"></li>
+                        <li><img src="image/百度.png"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container_two" v-show="regin">
+            <div class="con_top">
+                <img src="image/enrol_log.png">
+            </div>
+            <div class="con_bot">
+                <div class="bot_l">
+                    <div class="bot_head"><span style="font-size:22px">找工作</span> | 专注互联网职业机会</div>
+                    <input class="pho" type="text" placeholder="请输入常用手机号">
+                    <div class="cre">
+                        <input type="text" placeholder="证明你不是机器人">
+                        <input type="button" id="code" onclick="createCode()" title='点击更换验证码' />
+                    </div>
+                    <div class="code">
+                        <input type="text" placeholder="请输入验证码">
+                        <input type="text" id="btn" value="获取验证码" onclick="settime(this)" />
+                    </div>
+                    <div class="login">注册</div>
+                    <div class="msg">注册代表你已同意<span>「拉勾用户协议」</span></div>
+                </div>
+                <div class="bot_m">
+                    <div class="line"></div>
+                </div>
+                <div class="bot_r">
+                    <h5>已有账号:</h5>
+                    <div @click="log()">直接登陆 <span class="glyphicon glyphicon-circle-arrow-right"></span></div>
+                    <h5>使用以下账号直接登陆:</h5>
+                    <ul>
+                        <li><img src="image/新浪.png"></li>
+                        <li><img src="image/微信.png"></li>
+                        <li><img src="image/qq.png"></li>
+                        <li><img src="image/百度.png"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            login:true,
+            regin:false
+        },
+        methods: {
+            reg:function () {
+                this.login=!this.login
+                this.regin=!this.regin
+            },
+            log:function () {
+                this.login=!this.login
+                this.regin=!this.regin
+            },
+        }
+    });
+</script>
+<script type="text/javascript">
+    var countdown = 60;
+    function settime(obj) {
+        if(countdown == 0) {
+            obj.removeAttribute("disabled");
+            obj.value = "免费获取验证码";
+            countdown = 60;
+            return;
+        } else {
+            obj.setAttribute("disabled", true);
+            obj.value = "重新发送(" + countdown + ")";
+            countdown--;
+        }
+        setTimeout(function() {
+            settime(obj)
+        }, 1000)
+    }
+</script>
+<script type='text/javascript'>
+    var code ; //在全局定义验证码
+
+    function createCode(){
+        code = "";
+        var codeLength = 4;//验证码的长度
+        var checkCode = document.getElementById("code");
+        var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
+            'S','T','U','V','W','X','Y','Z');//随机数
+        for(var i = 0; i < codeLength; i++) {//循环操作
+            var index = Math.floor(Math.random()*36);//取得随机数的索引（0~35)
+            code += random[index];//根据索引取得随机数加到code上
+        }
+        checkCode.value = code;//把code值赋给验证码
+    }
+
+</script>
+<script>
+    $("#phone").focus(function(){
+        $("#phone").attr("placeholder","");
+        $("#zza").css("display","none");
+    });
+    $("#phone").blur(function(){
+        $("#phone").attr("placeholder","手机号邮箱不能为空");
+        if($("#phone").val()==""){
+            $("#phone").attr("placeholder","");
+            $("#zza").css("display","block");
+        }
+    });
+    $(".denglu").click(function () {
+        if($("#phone").val()==""){
+            $("#phone").attr("placeholder","");
+            $("#zza").css("display","block");
+        }
+        if($("#pwd").val()==""){
+            $("#pwd").attr("placeholder","");
+            $("#zzb").css("display","block");
+        }
+    })
+</script>
+<script>
+    $("#pwd").focus(function(){
+        $("#wd").attr("placeholder","");
+        $("#zzb").css("display","none");
+    });
+    $("#pwd").blur(function(){
+        $("#pwd").attr("placeholder","密码不能为空");
+        if($("#pwd").val()==""){
+            $("#pwd").attr("placeholder","");
+            $("#zzb").css("display","block");
+        }
+    });
+</script>
+
+
+
+</html>

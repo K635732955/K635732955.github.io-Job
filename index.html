@@ -1,0 +1,942 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/swiper.min.js"></script>
+<style>
+    body{background-color: white}
+    ul{list-style: none;}
+    ul li{float: left}
+    .header_top{height: 30px;background-color: #333;min-width: 1200px;}
+    .header_top .inner{position: relative;max-width: 1340px;margin: 0 auto;display: flex;justify-content: space-between}
+    .header_top .tbar_l{float: left;color:#08d7a2;font-size: 13px;padding:5px 0}
+    .header_top .tbar_l div{float: left;padding: 0 12px;}
+    .header_top .tbar_l img{width: 20px;height: 20px}
+    .header_top .tbar_l .text{color: #c4c3c3;border-left: 1px solid #5d5d5d;}
+    .header_top .tbar_l .text:hover{cursor: pointer;color: white}
+    .header_top .tbar_r span{color: white;font-size:10px}
+    .header_top .tbar_r{color: #c4c3c3;padding:5px 0;margin-right:20px}
+    .header_top .tbar_r ul li{border-left: 1px solid #5d5d5d;width:70px;text-align: center }
+    .header_top .tbar_r ul li:hover{color: white;cursor: pointer}
+    /*----------------------------------------------------------------------*/
+    .header_bot{min-width: 1200px;height: 54px;border-top: 1px solid #d2d2d2;border-bottom: 1px solid #e5e5e5; background-color: #fafafa;}
+    .header_bot .inner{width: 1200px;margin: 0 auto;}
+    .header_bot .nav_l{float: left;width: 230px;padding: 10px 0;display: flex;justify-content: space-between}
+    .header_bot .nav_l .text{font-size: 18px;line-height: 44px}
+    .header_bot .nav_l .text span{color: #999;font-size: 12px;cursor: pointer;}
+    .header_bot .nav_r{float: left;width: 400px;font-size:18px;color:#999;padding:15px 0;}
+    .header_bot .nav_r ul{display:flex;justify-content: space-between}
+    .header_bot .nav_r ul li{height:37px}
+    .header_bot .nav_r ul li a{text-decoration: none;color: #999;}
+    .header_bot .nav_r ul li:hover{color: black;border-bottom: 2px solid #00b93d;}
+    /*-------------------------------------------------------------------------------*/
+    .container_search{width: 100%;height:130px;background-color:#F2F5F4;}
+    .search_top{padding: 30px 0 28px;min-width: 1200px;}
+    .search_box{font-size: 0;width: 938px;height: 46px;margin: 0 auto;position: relative;}
+    .search_box input{height: 100%;font-size:18px}
+    .search_box .search{padding: 0 20px;background-color: white;outline: none;border: none;width:796px}
+    .search_box .search::placeholder{font-size: 16px}
+    .search_box .search:focus{border: 1px solid #00b38a}
+    .search_box .button{color: #fff;background-color: #00b38a;border:none;outline: none;width:142px}
+    .search_box_bot{width: 938px;height: 22px;margin:10px auto 0;}
+    .search_box_bot .text div{color: #777;font-size: 14px;;float: left}
+    .search_box_bot .text ul{font-size: 14px;float: left;margin-left:-38px }
+    .search_box_bot .text ul li{padding: 0 12px}
+    .search_box_bot .text ul a{text-decoration: none;color:#00b38a; }
+    .search_box_bot .text ul li a:hover{text-decoration:underline}
+    /*-------------------------------------------------------------------------------*/
+    .container_one{width: 100%}
+    .con_one{height:385px;margin: 26px auto 0;width: 1200px;}
+    .con_one .left{width: 320px;height:100%;float: left}
+    .con_one .menu_box{width: 100%;height:55px;padding: 15px 10px}
+    .con_one .menu_box:hover{box-shadow: 0 0 4px 2px rgba(0,0,0,.09);border-top-left-radius: 2px;border-bottom-left-radius: 2px;}
+    .con_one .menu_box div{float: left}
+    .con_one .menu_box .h{font-size:18px}
+    .con_one .menu_box .a{display: flex;justify-content: space-between;}
+    .con_one .menu_box a{color: #555;text-decoration: none;line-height:25px;margin-left:15px}
+    .con_one .menu_box a:hover{text-decoration:underline;color:#00b38a;}
+    .con_one .menu_box .span{float:right;color:#c6c6c6;margin-top:5px}
+    .con_one .right{height: 100%;width:880px;float: left}
+    .swiper-container{width:840px;height:385px;position:relative; z-index:1;}
+    /*--------------------------------------------------------------------------------*/
+    .dialog{z-index:2;padding:5px 20px;margin-top:15px;height:385px;box-shadow: 0 0 4px 2px rgba(0,0,0,.09);border-radius: 2px;;width:622px;background-color:white;position: relative;top:-400px;left:320px;}
+    .hdkf,.ydkf,.qdkf,.rgzn,.cpjl,.cpsjs,.gdzw{width: 100%;float: left;}
+    .dialog .title{color: #333;font-size: 15px}
+    .dialog ul{margin-left: -50px}
+    .dialog ul li{color: #777;padding: 5px 10px}
+    .dialog ul li:hover{color: #00b38a;cursor: pointer}
+    /*-------------------------------------------------------------------------------*/
+    .container_two{width: 100%}
+    .con_two{margin: 26px auto 0;width: 1200px;height:800px;}
+    .con_two .title{border-bottom: 1px solid #E8E8E8;width:100%;font-size:18px;color: #999;height: 52px;}
+    .con_two .title div{padding:8px 0;text-align:center;font-size:17px;cursor: pointer;height:52px;width:80px;float: left;margin-right: 20px}
+    .active{color: #333333;border-bottom: 3px solid #333333}
+
+    .con_two .career{display:flex;justify-content: space-between;width: 100%;height:215px}
+    .con_two .career .job{width: 389px;height: 200px;padding: 20px 18px 0;margin: 20px 0px;border: 2px solid #EAEEED; background-color: #fff;  }
+    .con_two .career .job:hover{box-shadow: 0px 0px 7px 2px #eaeeed;cursor: pointer;transition: .2s}
+    .job .texta{font-size: 17px;}
+    .job .texta .time{font-size: 15px;}
+    .job .texta img{width:15px;height:15px}
+    .job .texta .money{font-size: 17px;color:#fa6041;float: right}
+    .job .textb{color: #777;font-size: 15px;margin-top: 5px}
+    .job .textc{color: #999;display: flex;justify-content: space-between;width:245px;margin-top: 13px}
+    .job .textc div{border: 1px solid #F0F0F0;border-radius: 3px;text-align: center;width:75px;height: 30px;padding:4px 0}
+    .job .line_one{width: 100%;height: 1px;border-top: 1px dashed #E0E0E0;margin-top:20px}
+    .job .textd{margin-top:10px}
+    .job .textd img{width:40px;height: 40px;float: left}
+    .job .textd div{float:left;color: #999;padding: 2px 15px}
+    .job .textd div span{color: #555;}
+    .job .textd div span:hover{color:#00b38a}
+    .con_two .more{margin:35px auto;width: 100%;}
+    .con_two .more .more_btn{width: 387px;height: 42px;margin:0 auto;border: 1px solid #00B38A;padding:8px 0;font-size: 16px;color: #00b38a;text-align: center;}
+    .con_two .more .more_btn:hover{color: #fff;background-color: #00b38a;cursor: pointer;transition: .3s}
+    /*--------------------------------------------------------------------------------*/
+    .container_three{width: 100%}
+    .con_three{margin: 26px auto 0;width: 1200px;height:750px;}
+    .con_three .title{border-bottom: 1px solid #E8E8E8;width:100%;font-size:18px;color: #999;height: 52px;}
+    .con_three .title .span{letter-spacing: 1px;display: flex;justify-content: space-between;width: 200px;height: 52px;cursor: pointer}
+    .con_three .title span{padding:11px 0;height: 52px;color: #333;border-bottom: 3px solid #333}
+    .con_three .firm{margin-left:12px;margin-top:20px;padding:20px 18px 0;width:285px;height: 270px;border: 1px solid #EEE;float: left;text-align: center}
+    .con_three .firm:hover{box-shadow: 0px 0px 7px 2px #eaeeed;cursor: pointer;transition: .2s}
+    .firm .line_one{width: 100%;height: 1px;border-top: 1px dashed #E0E0E0;margin-top:20px}
+    .firm .bot{display: flex;justify-content: space-between;color: #00b38a;margin-top:18px}
+    .firm .bot span{font-size:14px;margin-top:1px;color:#999;}
+    .firm .bot span:hover{cursor: pointer;color: #00b38a;}
+    .firm .bot .mid{border-left: 1px solid #E0E0E0;border-right: 1px solid #E0E0E0;width: 90px}
+    .firm img{width: 80px;height: 80px}
+    .firm .texta{font-size:17px;margin-top:8px}
+    .firm .texta:hover{color:#00b38a }
+    .firm .textb{color: #999;font-size: 14px;margin-top:5px}
+    .firm .textc{font-size: 15px;margin-top:3px}
+    .con_three .more{width: 100%;float: left;}
+    .con_three .more .more_btn{width: 387px;height: 42px;margin:35px auto;border: 1px solid #00B38A;padding:8px 0;font-size: 16px;color: #00b38a;text-align: center;}
+    .con_three .more .more_btn:hover{color: #fff;background-color: #00b38a;cursor: pointer;transition: .3s}
+    /*--------------------------------------------------------------------------------*/
+    .footer{width: 100%;min-width: 1024px;background-color: #fff;height:75px;border-top: 1px solid #ebebeb;position: relative;  }
+    .footer .inner{width: 1024px;margin: 0 auto;;padding: 15px 0}
+    .footer img{float: left;width: 198px;height:25px}
+    .footer ul{float: left;text-align: center;margin-left: -10px;padding: 4px 20px}
+    .footer ul li{margin-left:10px;color: #555;font-size: 14px;}
+    .footer .di{color: #d5d5d5;font-size: 13px;width: 100%;text-align: center;}
+    /*--------------------------------------------------------------------------------*/
+    .back{width:1280px;height:100px;position:fixed;text-align: center;font-size:30px;top:530px}
+    .back .back_one{color:#fe8d0b;width:60px;height: 50%;padding-right: 5px;display: none;position:absolute;right: 0px}
+    .back .back_one:hover{cursor: pointer;opacity: 0.6}
+    .back .back_two{color: #00b38a;width:60px;height: 50%;position:absolute;right: 0px;top: 40px}
+    .back .back_two:hover{cursor: pointer;opacity: 0.6}
+    .back .back_two div{font-size:12px;margin-top: 4px}
+    /*-------------------------------------------------------------------------------*/
+    .user_con{background-color: #333;position: absolute;top: 30px;height:160px;width: 80px;text-align:center;right:33px;color: #c4c3c3;font-size: 15px;}
+    .user_con div{margin-top:10px;width: 100%;}
+    .user_con div:hover{background-color:#474747;color: white;cursor: pointer}
+    /*-------------------------------------------------------------------------------*/
+    .keywords_list{display: none;background-color:white;width:85%;z-index:3;position: relative;}
+    .keywords_list li{font-size:14px;list-style:none;color: black;padding: 10px 20px}
+    .keywords_list li:hover{padding-left: 25px;color: #fff;background-color: #00b38a;transition: .2s;cursor: pointer}
+    /*-------------------------------------------------------------------------------------*/
+    .hd:nth-child(1),.hd:nth-child(2),.hd:nth-child(3),.hd:nth-child(4),
+    .yd:nth-child(2),.hd:nth-child(3),
+    .qd:nth-child(3),
+    .rg:nth-child(1),.rg:nth-child(2),.rg:nth-child(8),
+    .cp:nth-child(1),.cp:nth-child(5),.cp:nth-child(7),
+    .sj:nth-child(2),
+    .zw:nth-child(2){color:#00b38a;}
+    /*-------------------------------------------------------------------------------------*/
+    .city{width:500px;height:500px;background: rgba(0,0,0,.5);position: absolute;margin: auto;z-index: 999;top:170px;left:38%}
+    .city_con{width:470px;height: 470px;background-color: white;margin-left: 15px;margin-top: 15px}
+    .city_con .bot_1{background-color:#00b38a;width: 100%;height:50px;color: white;font-size:20px;padding:10px}
+    .city_con .bot_2{background-color:white;width: 100%;height:420px;padding:25px}
+    .bot_2 .texta{font-size: 20px;margin-top: 8px;height:90px}
+    .bot_2 .texta span{font-size: 16px;color:#555 ;}
+    .line_two{height: 1px;width: 100%;background-color:#e5e5e5 }
+    .bot_2 .textb{margin-top:25px;line-height: 52px;text-align: center;font-size:14px;height: 50px;display: flex;justify-content: space-between;width:300px}
+    .bot_2 .textb div{width: 102px;height: 52px;border: 2px solid #00b38a;color: #555;font-size: 17px;line-height: 52px}
+    .bot_2 ul{float: left;width: 100%;padding: 10px 20px}
+    .bot_2 ul li{color: #999;margin-top: 20px;margin-left: 20px;width: 102px;height: 52px;text-align: center;line-height: 50px;border: 1px solid #dce4e6;font-size: 16px;}
+    .bot_2 ul li:hover{box-shadow: 0px 0px 0px 2px #00b38a;transition: .2s;cursor: pointer;color: #333333}
+    .bot_2 .textc{float: left}
+    /*----------------------------------------------------------------------------*/
+    .all{position: absolute;width: 100%;height:2315px;background: rgba(0,0,0,.8);z-index: 998;top: 0px}
+</style>
+</head>
+<body >
+<div id="app">
+    <div class="header_top">
+        <div class="inner">
+            <div class="tbar_l">
+                <div><img src="image/手机.png"> 拉勾APP</div>
+                <div class="text">进入企业版</div>
+            </div>
+            <div class="tbar_r">
+               <ul>
+                <li style="border: none">消息</li>
+                <li>我的简历</li>
+                <li>投递箱</li>
+                <li>收藏夹</li>
+                <li @click="user=!user">用户 <span class="glyphicon glyphicon-triangle-bottom"></span></li>
+               </ul>
+            </div>
+            <div class="user_con" v-show="user">
+                <div>我的订阅</div>
+                <div>职位邀请</div>
+                <div>账号设置</div>
+                <div>去企业版</div>
+                <div>退出</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="header_bot">
+        <div class="inner">
+            <div class="nav_l">
+                <div><img src="image/logo.png"></div>
+                <div class="text"><span class="ck">全国站</span>
+                    <span @click="city()">[切换城市]</span>
+                </div>
+            </div>
+            <div class="nav_r">
+                <ul>
+                    <li style="border-bottom: 2px solid #00b93d;"><a href="index.html" style="color:black;">首页</a></li>
+                    <li><a href="job.html">职位</a></li>
+                    <li><a href="company.html">公司</a></li>
+                    <li><a href="school.html">校园</a></li>
+                    <li><a href="Talk.html">言职</a></li>
+                </ul>
+            </div>
+            <div class="back">
+                <div class="back_one" id="back">
+                    <span class="glyphicon glyphicon-plane"></span>
+                </div>
+                <div class="back_two">
+                    <span class=" glyphicon glyphicon-headphones"></span>
+                    <div>联系客服</div>
+                </div>
+            </div>
+        </div>
+        <div class="all" v-show="all" @click="all=!all">
+        <div class="city" @click.stop="all=all">
+            <div class="city_con">
+                <div class="bot_1">切换城市</div>
+                <div class="bot_2">
+                    <div class="texta">亲爱的用户您好：<br><span>切换城市分站，让我们为您提供更准确的职位信息。</span></div>
+                    <div class="line_two"></div>
+                    <div class="textb">点击进入<div id="btn_all" class="ck">全国站</div> or 切换到以下城市</div>
+                    <ul>
+                        <li @click="all=!all">北京站</li>
+                        <li @click="all=!all">上海站</li>
+                        <li @click="all=!all">杭州站</li>
+                        <li @click="all=!all">广州站</li>
+                        <li @click="all=!all">深圳站</li>
+                        <li @click="all=!all">成都站</li>
+                    </ul>
+                    <div class="txetc">其他城市正在开通中，敬请期待...</div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="container_search">
+        <div class="search_top">
+            <div class="search_box">
+                <input class="search" placeholder="搜索职位 ，公司或地点" id="searchKey" onkeyup="searchSuggest(this);">
+                <input class="button" type="button" value="搜索">
+                <div class="keywords_list"></div>
+            </div>
+            <div class="search_box_bot">
+                <div class="text">
+                    <div>热门搜索：</div>
+                    <ul>
+                        <li v-for="(hot,index) in hots">
+                            <a href="#">{{hot.text}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container_one">
+        <div class="con_one">
+            <div class="left">
+                <div class="menu_box" v-for="(menu,index) in menus" @mouseover="data = index" @mouseleave="data = 7">
+                    <div class="h">{{menu.title}}</div>
+                    <div class="a">
+                        <a href="#" v-for="pro in menu.pros">{{pro.jet}}</a>
+                    </div>
+                    <div class="span"><span class=" glyphicon glyphicon-menu-right"></span></div>
+                </div>
+                <div class="dialog" v-show="data==0" @mouseover="data = 0" @mouseleave="data = 7">
+                    <div class="hdkf">
+                        <div class="title">后端开发</div>
+                        <ul>
+                            <li v-for="(hd,index) in hds" class="hd">{{hd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="ydkf" style="margin-top:13px">
+                        <div>移动开发</div>
+                        <ul>
+                            <li v-for="(yd,index) in yds" class="yd">{{yd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="qdkf" style="margin-top: 13px">
+                        <div>前端开发</div>
+                        <ul>
+                            <li v-for="(qd,index) in qds" class="qd">{{qd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="rgzn" style="margin-top:13px">
+                        <div>人工智能</div>
+                        <ul>
+                            <li v-for="(rg,index) in rgs" class="rg">{{rg.text}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dialog" v-show="data==1" @mouseover="data = 1" @mouseleave="data = 7">
+                    <div class="cpjl">
+                        <div class="title">产品经理</div>
+                        <ul>
+                            <li v-for="(cp,index) in cps" class="cp">{{cp.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="cpsjs" style="margin-top:13px">
+                        <div>产品设计师</div>
+                        <ul>
+                            <li v-for="(sjs,index) in sjss" class="sj">{{sjs.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="gdzw" style="margin-top: 13px">
+                        <div>高端职位</div>
+                        <ul>
+                            <li v-for="(zw,index) in zws" class="zw">{{zw.text}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dialog" v-show="data==2" @mouseover="data = 2" @mouseleave="data = 7" >
+                    <div class="hdkf">
+                        <div class="title">后端开发</div>
+                        <ul>
+                            <li v-for="(hd,index) in hds" class="hd">{{hd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="ydkf" style="margin-top:13px">
+                        <div>移动开发</div>
+                        <ul>
+                            <li v-for="(yd,index) in yds" class="yd">{{yd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="qdkf" style="margin-top: 13px">
+                        <div>前端开发</div>
+                        <ul>
+                            <li v-for="(qd,index) in qds" class="qd">{{qd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="rgzn" style="margin-top:13px">
+                        <div>人工智能</div>
+                        <ul>
+                            <li v-for="(rg,index) in rgs" class="rg">{{rg.text}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dialog" v-show="data==3" @mouseover="data = 3" @mouseleave="data = 7">
+                    <div class="cpjl">
+                        <div class="title">产品经理</div>
+                        <ul>
+                            <li v-for="(cp,index) in cps" class="cp">{{cp.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="cpsjs" style="margin-top:13px">
+                        <div>产品设计师</div>
+                        <ul>
+                            <li v-for="(sjs,index) in sjss" class="sj">{{sjs.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="gdzw" style="margin-top: 13px">
+                        <div>高端职位</div>
+                        <ul>
+                            <li v-for="(zw,index) in zws" class="zw">{{zw.text}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dialog" v-show="data==4" @mouseover="data = 4" @mouseleave="data = 7">
+                    <div class="hdkf">
+                        <div class="title">后端开发</div>
+                        <ul>
+                            <li v-for="(hd,index) in hds" class="hd">{{hd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="ydkf" style="margin-top:13px">
+                        <div>移动开发</div>
+                        <ul>
+                            <li v-for="(yd,index) in yds" class="yd">{{yd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="qdkf" style="margin-top: 13px">
+                        <div>前端开发</div>
+                        <ul>
+                            <li v-for="(qd,index) in qds" class="qd">{{qd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="rgzn" style="margin-top:13px">
+                        <div>人工智能</div>
+                        <ul>
+                            <li v-for="(rg,index) in rgs" class="rg">{{rg.text}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dialog" v-show="data==5" @mouseover="data = 5" @mouseleave="data = 7">
+                    <div class="cpjl">
+                        <div class="title">产品经理</div>
+                        <ul>
+                            <li v-for="(cp,index) in cps" class="cp">{{cp.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="cpsjs" style="margin-top:13px">
+                        <div>产品设计师</div>
+                        <ul>
+                            <li v-for="(sjs,index) in sjss" class="sj">{{sjs.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="gdzw" style="margin-top: 13px">
+                        <div>高端职位</div>
+                        <ul>
+                            <li v-for="(zw,index) in zws" class="zw">{{zw.text}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dialog" v-show="data==6" @mouseover="data = 6" @mouseleave="data = 7">
+                    <div class="hdkf">
+                        <div class="title">后端开发</div>
+                        <ul>
+                            <li v-for="(hd,index) in hds" class="hd">{{hd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="ydkf" style="margin-top:13px">
+                        <div>移动开发</div>
+                        <ul>
+                            <li v-for="(yd,index) in yds" class="yd">{{yd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="qdkf" style="margin-top: 13px">
+                        <div>前端开发</div>
+                        <ul>
+                            <li v-for="(qd,index) in qds" class="qd">{{qd.text}}</li>
+                        </ul>
+                    </div>
+                    <div class="rgzn" style="margin-top:13px">
+                        <div>人工智能</div>
+                        <ul>
+                            <li v-for="(rg,index) in rgs" class="rg">{{rg.text}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" style="background:url(image/top1.jpg);background-size: 100% 100%"></div>
+                        <div class="swiper-slide" style="background:url(image/top2.jpg);background-size: 100% 100%"></div>
+                        <div class="swiper-slide" style="background:url(image/top3.jpg);background-size: 100% 100%"></div>
+                        <div class="swiper-slide" style="background:url(image/top4.jpg);background-size: 100% 100%"></div>
+                        <div class="swiper-slide" style="background:url(image/top5.jpg);background-size: 100% 100%"></div>
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination swiper-pagination-white"></div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next swiper-button-white"></div>
+                    <div class="swiper-button-prev swiper-button-white"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container_two">
+        <div class="con_two">
+            <div class="title">
+                <div class="active">推荐职业</div>
+                <div >热门职业</div>
+                <div >最新职业</div>
+            </div>
+            <div class="career"  v-for="are in ares">
+                <div class="job" v-for="car in are.cars">
+                    <div class="texta">
+                        {{car.text}}
+                        <span class="time">[{{car.time}}发布]</span>
+                        <img src="image/消息.png">
+                        <span class="money">{{car.money}}</span>
+                    </div>
+                    <div class="textb">经验{{car.year}}年 / {{car.xueli}}</div>
+                    <div class="textc">
+                        <div>{{car.fxa}}</div>
+                        <div>{{car.fxb}}</div>
+                        <div>{{car.fxc}}</div>
+                    </div>
+                    <div class="line_one"></div>
+                    <div class="textd">
+                        <img :src="car.logo">
+                        <div><span>{{car.name}}</span><br>{{car.lx}} / {{car.zj}} / {{car.map}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="more">
+                <div class="more_btn">查看更多</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container_three">
+        <div class="con_three">
+            <div class="title">
+                <div class="span"><span style="">热门公司</span></div>
+            </div>
+            <div class="firm" v-for="(firm,index) in firms">
+                <img :src="firm.logo">
+                <div class="texta">{{firm.name}}</div>
+                <div class="textb">{{firm.lx}} / {{firm.zj}}</div>
+                <div class="textc">{{firm.text}}</div>
+                <div class="line_one"></div>
+                <div class="bot">
+                    <div>{{firm.numa}}<br><span>面试评价</span></div>
+                    <div class="mid">{{firm.numb}}<br><span>在职招聘</span></div>
+                    <div>{{firm.numc}}%<br><span>简历处理率</span></div>
+                </div>
+            </div>
+            <div class="more">
+                <div class="more_btn">查看更多</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="inner">
+            <img src="image/icon.png">
+            <ul>
+                <li>招聘APP</li>
+                <li>招聘微博</li>
+                <li>招聘微信</li>
+                <li>招聘小程序</li>
+                <li>帮助中心</li>
+                <li>联系我们</li>
+                <li>招聘解决方案</li>
+                <li>服务热线: 1234-1234-12（9：00-18：00）</li>
+            </ul>
+            <div class="di"> ©2018 招聘 天软ICP备14023790号-2 天软公网安备 1234567890号 </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            all:false,
+            data:'',
+            user:false,
+            hots:[
+                {text:'java'},
+                {text:'web前端'},
+                {text:'UI设计师'},
+                {text:'PHP'},
+                {text:'销售经理'},
+                {text:'产品经理'},
+                {text:'C++'},
+                {text:'内容运营'},
+                {text:'移动APP'}
+            ],
+            menus:[
+                {title:'技术',
+                    pros:[
+                        {jet:'Java'},
+                        {jet:'PHP'},
+                        {jet:'C++'},
+                        {jet:'Android'},
+                    ],
+                },
+                {title:'产品',
+                    pros:[
+                        {jet:'产品经理'},
+                        {jet:'产品总监'},
+                    ],
+                },
+                {title:'设计',
+                    pros:[
+                        {jet:'UI设计师'},
+                        {jet:'交互设计'},
+                        {jet:'网页设计师'},
+                    ],
+                },
+                {title:'运营',
+                    pros:[
+                        {jet:'新媒体运营'},
+                        {jet:'编辑'},
+                        {jet:'数据运营'},
+                    ],
+                },
+                {title:'市场与销售',
+                    pros:[
+                        {jet:'市场推广'},
+                        {jet:'市场总监'},
+                    ],
+                },
+                {title:'职能',
+                    pros:[
+                        {jet:'HR'},
+                        {jet:'行政'},
+                        {jet:'财务'},
+                        {jet:'审计'},
+                    ],
+                },
+                {title:'金融',
+                    pros:[
+                        {jet:'投资'},
+                        {jet:'融资'},
+                        {jet:'并购'},
+                        {jet:'风控'},
+                    ],
+                }
+            ],
+            ares:[
+                {
+                    cars:[
+                        {text:'导演助理',
+                            time:'20：59',
+                            money:'6k-10k',
+                            year:'经验不限',
+                            xueli:'不限',
+                            fxa:'安排',
+                            fxb:'通告',
+                            fxc:'排演',
+                            logo:'image/pic1.jpg',
+                            name:'府库商贸',
+                            lx:'文化娱乐',zj:'不需要融资',map:'四川'
+                        },
+                        {text:'产品助理',
+                            time:'20：31',
+                            money:'6k-12k',
+                            year:'1-3',
+                            xueli:'本科',
+                            fxa:'英语流利',
+                            fxb:'计算机技术',
+                            fxc:'流程管理',
+                            logo:'image/pic2.jpg',
+                            name:'梦思特',
+                            lx:'移动互联网',zj:'天使融资',map:'四川'
+                        },
+                        {text:'主案设计师',
+                            time:'17：54',
+                            money:'6k-10k',
+                            year:'3-4',
+                            xueli:'大专',
+                            fxa:'旅游',
+                            fxb:'高级',
+                            fxc:'CAD',
+                            logo:'image/pic3.jpg',
+                            name:'装饰工程有限公司',
+                            lx:'生活服务',zj:'不需要融资',map:'四川'
+                        },
+                    ]
+                },
+                {
+                    cars:[
+                        {text:'运维工程师',
+                            time:'22：03',
+                            money:'15k-20k',
+                            year:'1-3',
+                            xueli:'本科',
+                            fxa:'信息安全',
+                            fxb:'Nginx',
+                            fxc:'linux',
+                            logo:'image/pic4.jpg',
+                            name:'高达软件',
+                            lx:'移动互联网',zj:'上市公司',map:'浙江'
+                        },
+                        {text:'大数据研发工程师',
+                            time:'14：22',
+                            money:'20k-40k',
+                            year:'3-5',
+                            xueli:'本科',
+                            fxa:'资深',
+                            fxb:'高级',
+                            fxc:'数据分析',
+                            logo:'image/pic5.jpg',
+                            name:'易观',
+                            lx:'数据服务',zj:'B轮融资',map:'北京'
+                        },
+                        {text:'大客户销售',
+                            time:'20：08',
+                            money:'7k-11k',
+                            year:'1-3',
+                            xueli:'大专',
+                            fxa:'顾问',
+                            fxb:'地推',
+                            fxc:'客户代表',
+                            logo:'image/pic6.jpg',
+                            name:'美团点评',
+                            lx:'O2O',zj:'D轮融资',map:'上海'
+                        },
+                    ]
+                },
+                {
+                    cars:[
+                        {text:'互联网金融营运经理',
+                            time:'21：56',
+                            money:'10k-20k',
+                            year:'1-3',
+                            xueli:'本科',
+                            fxa:'金融',
+                            fxb:'会计',
+                            fxc:'活动运营',
+                            logo:'image/pic7.jpg',
+                            name:'竹米网络',
+                            lx:'移动互联网',zj:'未融资',map:'上海'
+                        },
+                        {text:'Java高级工程师',
+                            time:'20：03',
+                            money:'15k-20k',
+                            year:'2-4',
+                            xueli:'本科',
+                            fxa:'扁平管理',
+                            fxb:'成长空间',
+                            fxc:'测试',
+                            logo:'image/pic8.jpg',
+                            name:'51Talk 无忧英语',
+                            lx:'互联网教育',zj:'上市公司',map:'上海'
+                        },
+                        {text:'Cocos2d-js高级',
+                            time:'21：09',
+                            money:'9k-15k',
+                            year:'1-3',
+                            xueli:'本科',
+                            fxa:'工具软件',
+                            fxb:'游戏',
+                            fxc:'手游',
+                            logo:'image/pic9.jpg',
+                            name:'滴滴出行',
+                            lx:'移动动互联网',zj:'天使融资',map:'北京'
+                        },
+                    ]
+                },
+            ],
+            firms:[
+                {logo:'image/pic10.jpg',
+                    name:'盛大网络',
+                    lx:'游戏，文化娱乐',
+                    zj:'上市公司',
+                    text:'让精彩互联生活无处不在',
+                    numa:'14',numb:'7',numc:'100'
+                },
+                {logo:'image/pic11.jpg',
+                    name:'轩辕传媒',
+                    lx:'企业服务，广告营销',
+                    zj:'不需要融资',
+                    text:'互联网时代广告代理商',
+                    numa:'141',numb:'41',numc:'100'
+                },
+                {logo:'image/pic12.jpg',
+                    name:'谁叫我起床',
+                    lx:'移动互联网，社交网络',
+                    zj:'A轮',
+                    text:'史上最有亲和力的软件',
+                    numa:'91',numb:'5',numc:'100'
+                },
+                {logo:'image/pic13.jpg',
+                    name:'环球网',
+                    lx:'文化娱乐',
+                    zj:'上市公司',
+                    text:'环球网（www.huanqiu.com）',
+                    numa:'113',numb:'47',numc:'100'
+                },
+                {logo:'image/pic14.jpg',
+                    name:'九州医药集团',
+                    lx:'电子商务',
+                    zj:'上市公司',
+                    text:'一家以西药，重要，器械公司',
+                    numa:'22',numb:'33',numc:'71'
+                },
+                {logo:'image/pic15.jpg',
+                    name:'同步推',
+                    lx:'移动互联网',
+                    zj:'上市公司',
+                    text:'公司专注于互联网，移动互联网',
+                    numa:'87',numb:'8',numc:'100'
+                },
+                {logo:'image/pic16.jpg',
+                    name:'微爱',
+                    lx:'移动互联网，社交',
+                    zj:'A轮',
+                    text:'公司在情侣细分市场有3年经验',
+                    numa:'42',numb:'5',numc:'64'
+                },
+                {logo:'image/pic1.jpg',
+                    name:'土拨鼠',
+                    lx:'电子商务',
+                    zj:'B轮',
+                    text:'宁波地区规模最且最具潜力的IT企业',
+                    numa:'93',numb:'17',numc:'100'
+                },
+            ],
+            hds:[
+                {text:'Java'},
+                {text:'C++'},
+                {text:'PHP'},
+                {text:'数据挖掘'},
+                {text:'搜索算法'},
+                {text:'精准推荐'},
+                {text:'C'},
+                {text:'C#'},
+                {text:'全栈工程师'},
+                {text:'.NET'},
+                {text:'Hadoop'},
+                {text:'Python'},
+                {text:'Delphi'},
+                {text:'VB'},
+                {text:'Perl'},
+                {text:'Ruby'},
+                {text:'Node.js'},
+                {text:'Go'},
+                {text:'ASP'},
+                {text:'Shell'},
+                {text:'后端开发其他'}
+            ],
+            yds:[
+                {text:'HTML5'},
+                {text:'Android'},
+                {text:'iOS'},
+                {text:'WP'},
+                {text:'移动开发其他'}
+            ],
+            qds:[
+                {text:'web前端'},
+                {text:'Flash'},
+                {text:'html5'},
+                {text:'JavaScript'},
+                {text:'U3D'}
+            ],
+            rgs:[
+                {text:'深度学习'},
+                {text:'机器学习'},
+                {text:'图像处理'},
+                {text:'图象识别'},
+                {text:'语音识别'},
+                {text:'机器视觉'},
+                {text:'算法工程师'},
+                {text:'自然语言处理'}
+            ],
+            cps:[
+                {text:'产品经理'},
+                {text:'网页产品经理'},
+                {text:'移动产品经理'},
+                {text:'产品助理'},
+                {text:'数据产品经理'},
+                {text:'电商产品经理'},
+                {text:'游戏策划'},
+                {text:'产品实习生'}
+            ],
+            sjss:[
+                {text:'网页产品设计师'},
+                {text:'无线产品设计师'},
+            ],
+            zws:[
+                {text:'产品部经理'},
+                {text:'产品总监'},
+                {text:'游戏制作人'}
+            ],
+        },
+        methods: {
+            city:function () {
+                this.all = !this.all
+            }
+        }
+    });
+</script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 30,
+        effect: 'fade',
+        loop:true,
+        autoplay: 1000,
+    });
+</script>
+<script>
+    $("#back").click(function () {
+        var speed=500;//滑动的速度
+        $('body,html').animate({ scrollTop: 0 }, speed);
+        return false;
+    });
+</script>
+<script>
+    $(function(){
+        var h3_height = $(".container_one").offset().top;
+        $(window).scroll(function(){
+            var this_scrollTop = $(this).scrollTop();
+            if(this_scrollTop>h3_height ){
+                $("#back").show(1000);
+            }else{
+                $("#back").hide(1000);
+            }
+        });
+    });
+</script>
+<script>
+    function searchSuggest(obj){
+        var searchKey=$(obj).val();
+        var reg = new RegExp(searchKey,"i"); //忽略大小写匹配搜索框中输入的内容
+        $.ajax({
+            type:"get",
+            url:"json/search.json",
+            dataType:"json",
+            success:function(data){
+                var arr=[];
+                for(var i=0,len=data.length;i<len;i++){
+                    if(searchKey!="" && (data[i].initial.search(reg)!=-1 || data[i].keyword.search(reg)!=-1))  {
+                        arr.push("<li onclick='changeSearchKey(this);'>"+data[i].keyword+"</li>");
+                    }
+                }
+                $(".keywords_list").html(arr).show();
+            }
+        });
+    }
+    //单击匹配列表中的关键字选项时，将该关键字显示在搜索框中
+    function changeSearchKey(obj){
+        var value=$(obj).text();
+        $("#searchKey").val(value);
+        $('.keywords_list').hide();
+    }
+</script>
+<!--<script>-->
+    <!--$(".search_box .search").blur(function(){-->
+        <!--$(".keywords_list").css("display","none");-->
+    <!--});-->
+<!--</script>-->
+<script>
+    $(document).ready(function(e) {
+        $(".con_two .title div").click(function(){
+            $(".con_two .title div").eq($(this).index()).addClass("active").siblings().removeClass("active");
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".bot_2 ul li").click(function () {
+            $(".ck").text($(this).text());
+
+        });
+    });
+</script>
+
+
+</html>

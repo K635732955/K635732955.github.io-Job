@@ -1,0 +1,669 @@
+<!DOCTYPE>
+<?php
+	$con=mysqli_connect("127.0.0.1","root","root","moamour");
+	if(mysqli_connect_errno()){
+		echo "链接失败：".mysqli_connect_error();
+	}
+	mysqli_query($con, "set names utf8");
+	$result=mysqli_query($con,"SELECT * FROM mask");
+?>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>职位</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/paging.js"></script>
+    <style>
+        body{background-color: white}
+        ul{list-style: none;}
+        ul li{float: left}
+        .header_top{height: 30px;background-color: #333;min-width: 1200px;}
+        .header_top .inner{position: relative;max-width: 1340px;margin: 0 auto;display: flex;justify-content: space-between}
+        .header_top .tbar_l{float: left;color:#08d7a2;font-size: 13px;padding:5px 0}
+        .header_top .tbar_l div{float: left;padding: 0 12px;}
+        .header_top .tbar_l img{width: 20px;height: 20px}
+        .header_top .tbar_l .text{color: #c4c3c3;border-left: 1px solid #5d5d5d; }
+        .header_top .tbar_l .text:hover{cursor: pointer;color: white}
+        .header_top .tbar_r span{color: white;font-size:10px}
+        .header_top .tbar_r{color: #c4c3c3;padding:5px 0;margin-right:20px}
+        .header_top .tbar_r ul li{border-left: 1px solid #5d5d5d;width:70px;text-align: center}
+        .header_top .tbar_r ul li:hover{color: white;cursor: pointer}
+        /*----------------------------------------------------------------------*/
+        .header_bot{min-width: 1200px;height: 54px;border-top: 1px solid #d2d2d2;border-bottom: 1px solid #e5e5e5; background-color: #fafafa;}
+        .header_bot .inner{width: 1200px;margin: 0 auto;}
+        .header_bot .nav_l{float: left;width: 230px;padding: 10px 0;display: flex;justify-content: space-between}
+        .header_bot .nav_l .text{font-size: 18px;line-height: 44px}
+        .header_bot .nav_l .text span{color: #999;font-size: 12px;cursor: pointer;}
+        .header_bot .nav_r{float: left;width: 400px;font-size:18px;color:#999;padding:15px 0;}
+        .header_bot .nav_r ul{display:flex;justify-content: space-between}
+        .header_bot .nav_r ul li{height:37px}
+        .header_bot .nav_r ul li a{text-decoration: none;color: #999;}
+        .header_bot .nav_r ul li:hover{color: black;border-bottom: 2px solid #00b93d;}
+        /*-------------------------------------------------------------------------------*/
+        .footer{margin-top:45px;width: 100%;min-width: 1024px;background-color: #fff;height:75px;border-top: 1px solid #ebebeb;}
+        .footer .inner{width: 1024px;margin: 0 auto;;padding: 15px 0}
+        .footer img{float: left;width: 198px;height:25px}
+        .footer ul{float: left;text-align: center;margin-left: -10px;padding: 4px 20px}
+        .footer ul li{margin-left:10px;color: #555;font-size: 14px;}
+        .footer .di{color: #d5d5d5;font-size: 13px;width: 100%;text-align: center;}
+        /*--------------------------------------------------------------------------------*/
+        .back{width:1280px;height:100px;position:fixed;text-align: center;font-size:30px;top:590px;z-index: 999}
+        .back .back_one{color:#fe8d0b;width:60px;height: 50%;padding-right: 5px;display: none;position:absolute;right: 0px}
+        .back .back_one:hover{cursor: pointer;opacity: 0.6}
+        .back .back_two{color: #00b38a;width:60px;height: 50%;position:absolute;right: 0px;top: 40px}
+        .back .back_two:hover{cursor: pointer;opacity: 0.6}
+        .back .back_two div{font-size:12px;margin-top: 4px}
+        /*-------------------------------------------------------------------------------*/
+        .user_con{background-color: #333;position: absolute;top: 30px;height:160px;width: 80px;text-align:center;right:33px;color: #c4c3c3;font-size: 15px;}
+        .user_con div{margin-top:10px;width: 100%;}
+        .user_con div:hover{background-color:#474747;color: white;cursor: pointer}
+        /*-------------------------------------------------------------------------------*/
+        .container_search{width: 100%;height:156px;background-color:#F2F5F4;}
+        .tip{width: 220px;height: 30px;border-radius:3px;color: #999;font-size: 16px;margin-bottom: 14px;;line-height: 28px}
+        .tip div{float: left;margin-right: 10px;cursor: pointer}
+        .tip_one{width: 115px;height: 30px;background-color: #00b38a;color: white;text-align: center;padding-left:8px}
+        .search_top{padding:33px 0 28px;min-width: 1200px;}
+        .search_box{font-size: 0;width: 938px;height: 46px;margin: 0 auto;position: relative;}
+        .search_box input{height: 100%;font-size:18px}
+        .search_box .search{padding: 0 20px;background-color: white;outline: none;border: none;width:796px}
+        .search_box .search::placeholder{font-size: 16px}
+        .search_box .search:focus{border: 1px solid #00b38a}
+        .search_box .button{color: #fff;background-color: #00b38a;border:none;outline: none;width:142px}
+        /*-------------------------------------------------------------------------------*/
+        .keywords_list{display: none;background-color:white;width:85%;z-index:3;position: relative;}
+        .keywords_list li{font-size:14px;list-style:none;color: black;padding: 10px 20px}
+        .keywords_list li:hover{padding-left: 25px;color: #fff;background-color: #00b38a;transition: .2s;cursor: pointer}
+        /*-------------------------------------------------------------------------------*/
+        .wrapper{width: 100%;height:250px;margin-top:30px}
+        .wrapper .inner{width: 1200px;height: 100%;margin: 0 auto;font-size: 14px;color: #555;}
+        .wrapper .inner .wrapper_top{width: 100%;height:189px;border: 1px solid #ededed;background-color: #fafafa;}
+        .wrapper_con{display: flex;justify-content: space-between;position: relative;z-index: 999}
+        .wrapper_con ul{margin-left: -30px;margin-top:3px}
+        .wrapper_con div{margin-top:4px}
+        .wrapper_top .wrapper_con {padding:2px 15px}
+        .wrapper_top .wrapper_con .glyphicon{color:#00b38b }
+        .wrapper_con {padding:10px 20px}
+        .wrapper_con p{margin-right:11px}
+        .wrapper_con .title{color: #333333;font-weight: 600;float: left}
+        .wrapper_con ul li{padding: 0 10px;cursor: pointer;margin-left:5px}
+        .wrapper_con ul li:hover{background-color:#00b38a;color: white}
+        .wrapper .inner .wrapper_bot{width: 100%;height:43px;margin-top:22px;border: 1px solid #ededed;background-color:#fafafa }
+        .wrapper_bot ul{margin-left:-36px;height: 25px;margin-top: -3px}
+        .active{background-color:#00b38a;color: white}
+        .bq_left{width:600px;display: flex;justify-content: space-between;}
+        .bq_left select{margin-left:20px;margin-top: -2px;border: 1px solid #f3f3f3;background-color: #fff;height: 22px; font-size: 14px;width:90px}
+        .bq_right{cursor: pointer;padding-left:25px;text-align: center;width:100px;height: 100%;border-left: 1px solid #ededed;color: #555;font-size:15px;}
+        .bq_right .span{color:#00b38a}
+        /*-------------------------------------------------------------------------------*/
+        .container_one{width: 100%;height:1050px;}
+        .con_one{margin: 26px auto 0;width:1200px;height: 100%;}
+        .left{width: 960px;height: 100%;float: left}
+        .left .work{width:958px;height:125px;border: 1px solid #ededed;margin-bottom: 20px;cursor: pointer}
+        .left .work_top{width: 100%;height:85px;display: flex;justify-content: space-between}
+        .left .work_bot{padding: 7px 0;width: 100%;height:40px;background-color: #fafafa;display: flex;justify-content: space-between}
+        .top_r img{width: 60px;height: 60px}
+        .top_l_t img{width:16px;height: 16px;margin-left: 2px;margin-top: -4px}
+        .top_l_t span{margin: 0 3px;color: #999;font-size: 13px}
+        .top_l_t{font-size: 16px;color: #00b38a;height:30px}
+        .top_l{width: 528px;height: 100%;padding: 14px 15px 0;}
+        .top_r{width: 77px;height: 100%;padding: 12px 0;}
+        .bot_l{width:528px;height: 100%;}
+        .bot_l .ku{float: left;margin-left:13px;color: #555;border: 1px solid #dcdcdc;border-radius: 3px;height:25px;padding: 0 5px;line-height: 22px}
+        .bot_r{width:430px;height: 100%;padding: 0 20px;color: #888;font-size: 14px}
+        .top_l_m{height: 24px}
+        .top_l_m .money{margin-right: 1em;font-size: 16px;color: #fd5f39;}
+        .top_l_m .exp{font-size: 14px;color: #555;}
+        .top_m{width: 303px;height: 100%;padding: 14px 0;}
+        .top_m_t{height:30px;color: #00b38a;font-size: 16px;}
+        .top_m_b{height: 24px;font-size: 14px;color: #555;}
+        .right{width:240px;height: 100%;float: left;text-align: center}
+        .right img{width: 220px;height:125px;margin-bottom: 20px}
+        /*---------------------------------------------------------------------------------*/
+        .page{width: 100%;height:30px;}
+        .page_box{width:800px;height: 100%;margin:0 auto;}
+        .page_wai{margin: 0 auto;width:410px;}
+        .page_div{font-size: 15px;color: #666666;box-sizing: border-box;}
+        .page_div a{text-decoration: none;min-width: 30px;height: 28px;border: 1px solid #ededed;!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 28px;color: #666666;font-size: 13px;display: inline-block;  }
+        .page_div a:hover{background-color: #00b38a;color: white}
+        #prePage:hover{background-color:#00b38a;color: white}
+        #nextPage:hover{background-color:#00b38a;color: white}
+        #prePage,#nextPage {width: 70px;color:black;border: 1px solid #ededed;!important;}
+        .page_div .current {background-color:#00b38a;border-color: #00b38a;color: #FFFFFF;}
+        /*-------------------------------------------------------------------------------*/
+    </style>
+</head>
+<body >
+<div id="app">
+    <div class="header_top">
+        <div class="inner">
+            <div class="tbar_l">
+                <div><img src="image/手机.png"> 拉勾APP</div>
+                <div class="text">进入企业版</div>
+            </div>
+            <div class="tbar_r">
+                <ul>
+                    <li style="border: none">消息</li>
+                    <li>我的简历</li>
+                    <li>投递箱</li>
+                    <li>收藏夹</li>
+                    <li @click="user=!user">用户 <span class="glyphicon glyphicon-triangle-bottom"></span></li>
+                </ul>
+            </div>
+            <div class="user_con" v-show="user">
+                <div>我的订阅</div>
+                <div>职位邀请</div>
+                <div>账号设置</div>
+                <div>去企业版</div>
+                <div>退出</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="header_bot">
+        <div class="inner">
+            <div class="nav_l">
+                <div><img src="image/logo.png"></div>
+            </div>
+            <div class="nav_r">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li style="border-bottom: 2px solid #00b93d;"><a href="job.html"  style="color:black;">职位</a></li>
+                    <li><a href="company.html">公司</a></li>
+                    <li><a href="school.html">校园</a></li>
+                    <li><a href="Talk.html">言职</a></li>
+                </ul>
+            </div>
+            <div class="back">
+                <div class="back_one" id="back">
+                    <span class="glyphicon glyphicon-plane"></span>
+                </div>
+                <div class="back_two">
+                    <span class=" glyphicon glyphicon-headphones"></span>
+                    <div>联系客服</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container_search">
+        <div class="search_top">
+            <div class="search_box">
+                <div class="tip">
+                    <div class="tip_one">职位（500+）</div>
+                    <div>公司（0）</div>
+                </div>
+                <input class="search" placeholder="请输入公司名/职位名" id="searchKey" onkeyup="searchSuggest(this);">
+                <input class="button" type="button" value="搜索">
+                <div class="keywords_list"></div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="inner">
+            <div class="wrapper_top">
+                <div class="wrapper_con">
+                    <ul style="margin-top: 5px">
+                        <span class="title">工作地点 :</span>
+                        <li v-for="(city,index) in citys" :class="{'active':inda === index}" @click="changeBga(index)">{{city.text}}</li>
+                    </ul>
+                    <div>更多 <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+                </div>
+                <div class="wrapper_con">
+                    <ul style="margin-top: 5px">
+                        <span class="title">工作经验 :</span>
+                        <li v-for="(erp,index) in erps" :class="{'active':indb === index}" @click="changeBgb(index)">{{erp.text}}</li>
+                    </ul>
+                </div>
+                <div class="wrapper_con">
+                    <ul style="margin-top: 5px">
+                        <span class="title">学历要求 :</span>
+                        <li v-for="(grd,index) in grds" :class="{'active':indc === index}" @click="changeBgc(index)">{{grd.text}}</li>
+                    </ul>
+                </div>
+                <div class="wrapper_con">
+                    <ul><span class="title">融资阶段 :</span>
+                        <li v-for="(money,index) in moneys" :class="{'active':indd === index}" @click="changeBgd(index)">{{money.text}}</li>
+                    </ul>
+                </div>
+                <div class="wrapper_con">
+                    <ul><span class="title">行业领域 :</span>
+                        <li v-for="(job,index) in jobs" :class="{'active':inde=== index}" @click="changeBge(index)">{{job.text}}</li>
+                    </ul>
+                    <div>更多 <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+                </div>
+            </div>
+            <div class="wrapper_bot">
+                <div class="wrapper_con">
+                    <div class="bq_left">
+                    <ul><span class="title">排序方式 :</span>
+                        <li v-for="(met,index) in mets" :class="{'active':indf === index}" @click="changeBgf(index)">{{met.text}}</li>
+                    </ul>
+                    <ul><span class="title">月薪 :</span>
+                        <select>
+                            <option v-for="gz in gzs" :value="gz.value">{{gz.text}}</option>
+                        </select>
+                    </ul>
+                    <ul><span class="title">工资性质 :</span>
+                        <select>
+                            <option v-for="xz in xzs" :value="xz.value">{{xz.text}}</option>
+                        </select>
+                    </ul>
+                    </div>
+                    <div class="bq_right">
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                        <span class="span">1</span> / 30
+                        <span class="glyphicon glyphicon-menu-right"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container_one">
+        <div class="con_one">
+            <div class="left">
+                <div v-for="(work,index) in works" class="work" @click="jobcon()">
+                    <div class="work_top">
+                        <div class="top_l">
+                            <div class="top_l_t">{{work.job}}
+                                <span>{{work.time}}发布 <img src="image/消息.png"> </span>
+                            </div>
+                            <div class="top_l_m">
+                                <span class="money">{{work.money}}</span>
+                                <span class="exp">经验{{work.jy}}年 / {{work.grd}}</span>
+                            </div>
+                        </div>
+                        <div class="top_m">
+                            <div class="top_m_t">{{work.name}} <span class="glyphicon glyphicon-check"></span></div>
+                            <div class="top_m_b">{{work.fen}} / {{work.zimu}}轮及以上</div>
+                        </div>
+                        <div class="top_r">
+                            <img :src="work.logo">
+                        </div>
+                    </div>
+                    <div class="work_bot">
+                        <div class="bot_l">
+                            <div class="ku" v-for="ku in work.kus">{{ku.text}}</div>
+                        </div>
+                        <div class="bot_r">{{work.title}}</div>
+                    </div>
+                </div>
+                <div class="work">
+                    <div class="work_top">
+                        <div class="top_l">
+                            <div class="top_l_t">Hadoop工程师[上海]
+                                <span>10:39发布 <img src="image/消息.png"> </span>
+                            </div>
+                            <div class="top_l_m">
+                                <span class="money">15K-25K</span>
+                                <span class="exp">经验1-3年 / 本科</span>
+                            </div>
+                        </div>
+                        <div class="top_m">
+                            <div class="top_m_t">顺丰快递 <span class="glyphicon glyphicon-check"></span></div>
+                            <div class="top_m_b">移动互联网,企业服务 / 天使轮及以上</div>
+                        </div>
+                        <div class="top_r">
+                            <img src="image/pic11.jpg">
+                        </div>
+                    </div>
+                    <div class="work_bot">
+                        <div class="bot_l">
+                            <div class="ku">云计算</div>
+                            <div class="ku">高级</div>
+                            <div class="ku">Java</div>
+                            <div class="ku">大数据</div>
+                            <div class="ku">分布式</div>
+                        </div>
+                        <div class="bot_r">“高薪酬,股票期权,大牛团队,投资人热捧”</div>
+                    </div>
+                </div><br>
+                <div class="page">
+                    <div class="page_box">
+                        <div class="page_wai">
+                            <div value="1 0"></div>
+                            <div id="page" class="page_div"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <img src="image/pub3.jpg">
+                <img src="image/pub8.jpg">
+                <img src="image/pub9.jpg">
+                <img src="image/pub10.jpg">
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="footer">
+        <div class="inner">
+            <img src="image/icon.png">
+            <ul>
+                <li>招聘APP</li>
+                <li>招聘微博</li>
+                <li>招聘微信</li>
+                <li>招聘小程序</li>
+                <li>帮助中心</li>
+                <li>联系我们</li>
+                <li>招聘解决方案</li>
+                <li>服务热线: 1234-1234-12（9：00-18：00）</li>
+            </ul>
+            <div class="di"> ©2018 招聘 天软ICP备14023790号-2 天软公网安备 1234567890号 </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            inda:0,
+            indb:0,
+            indc:0,
+            indd:0,
+            inde:0,
+            indf:0,
+            user:false,
+            citys:[
+                {text:'全国'},
+                {text:'北京'},
+                {text:'上海'},
+                {text:'深圳'},
+                {text:'广州'},
+                {text:'杭州'},
+                {text:'成都'},
+                {text:'南京'},
+                {text:'武汉'},
+                {text:'西安'},
+                {text:'厦门'},
+                {text:'长沙'},
+                {text:'苏州'},
+                {text:'天津'}
+            ],
+            erps:[
+                {text:'不限'},
+                {text:'应届毕业生'},
+                {text:'3年及以下'},
+                {text:'3-5年'},
+                {text:'5-10年'},
+                {text:'10年以上'},
+                {text:'不要求'},
+
+            ],
+            grds:[
+                {text:'不限'},
+                {text:'大专'},
+                {text:'本科'},
+                {text:'硕士'},
+                {text:'博士'},
+                {text:'不要求'}
+            ],
+            moneys:[
+                {text:'不限'},
+                {text:'未融资'},
+                {text:'天使轮'},
+                {text:'A轮'},
+                {text:'B轮'},
+                {text:'C轮'},
+                {text:'D轮及以上'},
+                {text:'上市公司'},
+                {text:'不需要融资'}
+            ],
+            jobs:[
+                {text:'不限'},
+                {text:'移动互联网'},
+                {text:'电子商务'},
+                {text:'金融'},
+                {text:'企业服务'},
+                {text:'教育'},
+                {text:'文化娱乐'},
+                {text:'游戏'},
+                {text:'O2O'},
+                {text:'硬件'}
+            ],
+            mets:[
+                {text:'默认'},
+                {text:'最新'}
+            ],
+            gzs:[
+                {text:'不限',value:'a'},
+                {text:'2K以下',value:'b'},
+                {text:'2K-5k',value:'c'},
+                {text:'5K-10K',value:'d'},
+                {text:'10K-15K',value:'e'},
+                {text:'15K-25K',value:'f'},
+                {text:'25K-30K',value:'g'},
+                {text:'50K以上',value:'h'},
+            ],
+            xzs:[
+                {text:'不限',value:'a'},
+                {text:'全职',value:'b'},
+                {text:'兼职',value:'c'},
+                {text:'实习',value:'d'}
+            ],
+            works:[
+                {
+                    kus:[
+                        {text:'技能培训'},
+                        {text:'节日礼物'},
+                        {text:'带薪年假'},
+                        {text:'绩效奖金'}
+                    ],
+                    job:'前端工程师[北京]',
+                    time:'09:35',
+                    money:'12K-18K',
+                    jy:'3-5',
+                    grd:'大专',
+                    name:'小米',
+                    fen:'移动互联网 ',
+                    zimu:'C',
+                    logo:'image/pic4.jpg',
+                    title:'“六险一金,年终多薪,晋升空间大,公司环境好”'
+                },
+                {
+                    kus:[
+                        {text:'股票期权'},
+                        {text:'绩效奖金'},
+                        {text:'五险一金'},
+                        {text:'带薪年假'}
+                    ],
+                    job:'数据分析专员[成都]',
+                    time:'10:35',
+                    money:'7K-14K',
+                    jy:'1-3',
+                    grd:'本科',
+                    name:'智融集团',
+                    fen:'金融 ',
+                    zimu:'C',
+                    logo:'image/pic6.jpg',
+                    title:'“六险一金、环境优良、导师制”'
+                },
+                {
+                    kus:[
+                        {text:'本地生活'},
+                        {text:'软件开发'},
+                        {text:'企业软件'},
+                        {text:'大数据'}
+                    ],
+                    job:'Java后台开发[杭州]',
+                    time:'10：40',
+                    money:'20K-40K',
+                    jy:'3-5',
+                    grd:'本科',
+                    name:'腾讯',
+                    fen:'蚂蚁金服集团',
+                    zimu:'B',
+                    logo:'image/pic10.jpg',
+                    title:'“激情,大数据,期权”'
+                },
+                {
+                    kus:[
+                        {text:'云计算'},
+                        {text:'高级'},
+                        {text:'Java'},
+                        {text:'大数据'},
+                        {text:'分布式'},
+                    ],
+                    job: 'Hadoop工程师[深圳]',
+                    time:'10:39',
+                    money:'15K-25K',
+                    jy:'1-3',
+                    grd:'本科',
+                    name:'聚蜂智能',
+                    fen:'移动互联网,企业服务 ',
+                    zimu:'天使轮 ',
+                    logo:'image/pic9.jpg',
+                    title:'“高薪酬,股票期权,大牛团队,投资人热捧”'
+                },
+                {
+                    kus:[
+                        {text:'搜索'},
+                        {text:'推荐'},
+                        {text:'大数据'},
+                        {text:'数据结构'}
+                    ],
+                    job:'机器学习算法工程师[深圳]',
+                    time:'10:35',
+                    money:'18K-25K',
+                    jy:'1-3',
+                    grd:'硕士',
+                    name:'知乎',
+                    fen:'移移动互联网,社交网络',
+                    zimu:'D',
+                    logo:'image/pic15.jpg',
+                    title:'“一日三餐、转正机会、24 小时健身房”'
+                },
+                {
+                    kus:[
+                        {text:'云计算'},
+                        {text:'高级'},
+                        {text:'Java'},
+                        {text:'大数据'},
+                        {text:'分布式'},
+                    ],
+                    job:'机器视觉工程师[青岛]',
+                    time:'10:39',
+                    money:'15K-25K',
+                    jy:'1-3',
+                    grd:'本科',
+                    name:'阿里巴巴',
+                    fen:'移动互联网,企业服务 ',
+                    zimu:'天使轮 ',
+                    logo:'image/pic2.jpg',
+                    title:'“高薪酬,股票期权,大牛团队,投资人热捧”'
+                },
+//                {
+//                    kus:[
+//                        {text:'云计算'},
+//                        {text:'高级'},
+//                        {text:'Java'},
+//                        {text:'大数据'},
+//                        {text:'分布式'},
+//                    ],
+//                    job: 'Hadoop工程师[上海]',
+//                    time:'10:39',
+//                    money:'15K-25K',
+//                    jy:'1-3',
+//                    grd:'本科',
+//                    name:'顺丰快递',
+//                    fen:'移动互联网,企业服务 ',
+//                    zimu:'天使轮 ',
+//                    logo:'image/pic11.jpg',
+//                    title:'“高薪酬,股票期权,大牛团队,投资人热捧”'
+//                }
+            ],
+        },
+        methods: {
+            changeBga: function (index) {
+                this.inda = index;
+            },
+            changeBgb: function (index) {
+                this.indb = index;
+            },
+            changeBgc: function (index) {
+                this.indc = index
+            },
+            changeBgd: function (index) {
+                this.indd = index
+            },
+            changeBge: function (index) {
+                this.inde = index
+            },
+            changeBgf: function (index) {
+                this.indf = index
+            },
+            jobcon:function () {
+                window.location.href='job_con.html'
+            }
+        }
+    });
+</script>
+
+<script>
+    $("#back").click(function () {
+        var speed=500;//滑动的速度
+        $('body,html').animate({ scrollTop: 0 }, speed);
+        return false;
+    });
+</script>
+<script>
+    $(function(){
+        var h3_height = $(".container_one").offset().top;
+        $(window).scroll(function(){
+            var this_scrollTop = $(this).scrollTop();
+            if(this_scrollTop>h3_height ){
+                $("#back").show(1000);
+            }else{
+                $("#back").hide(1000);
+            }
+        });
+    });
+</script>
+<script>
+    function searchSuggest(obj){
+        var searchKey=$(obj).val();
+        var reg = new RegExp(searchKey,"i"); //忽略大小写匹配搜索框中输入的内容
+        $.ajax({
+            type:"get",
+            url:"json/search.json",
+            dataType:"json",
+            success:function(data){
+                var arr=[];
+                for(var i=0,len=data.length;i<len;i++){
+                    if(searchKey!="" && (data[i].initial.search(reg)!=-1 || data[i].keyword.search(reg)!=-1))  {
+                        arr.push("<li onclick='changeSearchKey(this);'>"+data[i].keyword+"</li>");
+                    }
+                }
+                $(".keywords_list").html(arr).show();
+            }
+        });
+    }
+    //单击匹配列表中的关键字选项时，将该关键字显示在搜索框中
+    function changeSearchKey(obj){
+        var value=$(obj).text();
+        $("#searchKey").val(value);
+        $('.keywords_list').hide();
+    }
+</script>
+<script>
+    $("#page").paging({
+        pageNo:5,
+        totalPage: 9,
+        totalSize: 300,
+        callback: function(num) {
+
+        }
+    })
+</script>
+
+
+
+</html>

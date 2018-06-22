@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>职位管理列表</title>
+    <script src="js/vue.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        .mid{width: 100%; height:30px;border-bottom: 1px solid #eff2f7}
+        .con{width: 100%;height:850px;}
+        .toolbar{background-color:#f2f2f2;margin-top:15px;height:60px}
+        .toolbar_from{padding-top:7px}
+        .tab{width: 100% ;border-bottom: none;position: absolute;margin-top:95px}
+        .tab table{width: 100%;text-align: center;border-collapse:collapse;border: 1px solid #dfe6ec}
+        .tab tr{width: 100%;height:55px;border-bottom:1px solid #dfe6ec}
+        .tr_head{background-color:#eef1f6}
+        .tab tr td{height:54px;}
+        .tab .money{font-size: 16px;color: #fd5f39;}
+    </style>
+
+</head>
+<body>
+<div id="app">
+    <div class="mid">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
+            <el-breadcrumb-item>职位管理</el-breadcrumb-item>
+            <el-breadcrumb-item>职位管理信息</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+    <div class="con">
+        <el-col :span="24" class="toolbar">
+            <el-form :inline="true" class="toolbar_from">
+                <el-form-item>
+                    <el-input  placeholder="职位名称"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary">查询</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="dialogTableVisible = true">新增</el-button>
+                </el-form-item>
+            </el-form>
+        </el-col>
+
+        <div class="tab">
+            <table>
+                <tr class="tr_head">
+                    <th>职位名称</th>
+                    <th>薪资</th>
+                    <th>学历要求</th>
+                    <th>招聘公司</th>
+                    <th>公司地址</th>
+                    <th>公司logo</th>
+                    <th>公司类型</th>
+                    <th>职位福利</th>
+                    <th>操作</th>
+                </tr>
+                <tr>
+                    <td>前端工程师</td>
+                    <td class="money">12K-18K</td>
+                    <td>本科</td>
+                    <td>天软</td>
+                    <td>北京市</td>
+                    <td>logo</td>
+                    <td>移动互联网 / C轮及以上</td>
+                    <td>“六险一金,年终多薪”</td>
+                    <td>
+                        <el-button size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small">删除</el-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>JAVA工程师</td>
+                    <td class="money">22K-55K</td>
+                    <td>博士</td>
+                    <td>上海</td>
+                    <td>北京市</td>
+                    <td>标志</td>
+                    <td>移动互联网 / C轮及以上</td>
+                    <td>“发福利”</td>
+                    <td>
+                        <el-button size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small">删除</el-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>前端工程师</td>
+                    <td class="money">12K-18K</td>
+                    <td>本科</td>
+                    <td>天软</td>
+                    <td>北京市</td>
+                    <td>logo</td>
+                    <td>移动互联网 / C轮及以上</td>
+                    <td>“六险一金,年终多薪”</td>
+                    <td>
+                        <el-button size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small">删除</el-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>JAVA工程师</td>
+                    <td class="money">22K-55K</td>
+                    <td>博士</td>
+                    <td>上海</td>
+                    <td>北京市</td>
+                    <td>标志</td>
+                    <td>移动互联网 / C轮及以上</td>
+                    <td>“发福利”</td>
+                    <td>
+                        <el-button size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small">删除</el-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>前端工程师</td>
+                    <td class="money">12K-18K</td>
+                    <td>本科</td>
+                    <td>天软</td>
+                    <td>北京市</td>
+                    <td>logo</td>
+                    <td>移动互联网 / C轮及以上</td>
+                    <td>“六险一金,年终多薪”</td>
+                    <td>
+                        <el-button size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small">删除</el-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>JAVA工程师</td>
+                    <td class="money">22K-55K</td>
+                    <td>博士</td>
+                    <td>上海</td>
+                    <td>北京市</td>
+                    <td>标志</td>
+                    <td>移动互联网 / C轮及以上</td>
+                    <td>“发福利”</td>
+                    <td>
+                        <el-button size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small">删除</el-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>前端工程师</td>
+                    <td class="money">12K-18K</td>
+                    <td>本科</td>
+                    <td>天软</td>
+                    <td>北京市</td>
+                    <td>logo</td>
+                    <td>移动互联网 / C轮及以上</td>
+                    <td>“六险一金,年终多薪”</td>
+                    <td>
+                        <el-button size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small">删除</el-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>JAVA工程师</td>
+                    <td class="money">22K-55K</td>
+                    <td>博士</td>
+                    <td>上海</td>
+                    <td>北京市</td>
+                    <td>标志</td>
+                    <td>移动互联网 / C轮及以上</td>
+                    <td>“发福利”</td>
+                    <td>
+                        <el-button size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small">删除</el-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>前端工程师</td>
+                    <td class="money">12K-18K</td>
+                    <td>本科</td>
+                    <td>天软</td>
+                    <td>北京市</td>
+                    <td>logo</td>
+                    <td>移动互联网 / C轮及以上</td>
+                    <td>“六险一金,年终多薪”</td>
+                    <td>
+                        <el-button size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small">删除</el-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>前端工程师</td>
+                    <td class="money">12K-18K</td>
+                    <td>本科</td>
+                    <td>天软</td>
+                    <td>北京市</td>
+                    <td>logo</td>
+                    <td>移动互联网 / C轮及以上</td>
+                    <td>“六险一金,年终多薪”</td>
+                    <td>
+                        <el-button size="small" @click="dialogFormVisible = true">编辑</el-button>
+                        <el-button type="danger" size="small">删除</el-button>
+                    </td>
+                </tr>
+                <tbody id="clum">
+            </table>
+
+
+        </div>
+    </div>
+
+
+
+    <el-dialog title="" :visible.sync="dialogTableVisible" width="50%">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="职位名称" prop="name">
+                <el-input v-model="ruleForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="薪资" prop="money">
+                <el-input v-model="ruleForm.money"></el-input>
+            </el-form-item>
+            <el-form-item label="学历要求" prop="edu">
+                <el-input v-model="ruleForm.edu"></el-input>
+            </el-form-item>
+            <el-form-item label="招聘公司" prop="company">
+                <el-input v-model="ruleForm.company"></el-input>
+            </el-form-item>
+            <el-form-item label="公司地址" prop="address">
+                <el-input v-model="ruleForm.address"></el-input>
+            </el-form-item>
+            <el-form-item label="公司logo" prop="img">
+                <el-input v-model="ruleForm.img"></el-input>
+            </el-form-item>
+            <el-form-item label="公司类型" prop="type">
+                <el-input v-model="ruleForm.type"></el-input>
+            </el-form-item>
+            <el-form-item label="职位福利" prop="fare">
+                <el-input v-model="ruleForm.fare"></el-input>
+            </el-form-item>
+        </el-form>
+
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="submitForm('ruleForm')" >确认提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+            <!--<el-button @click="dialogTableVisible = false">取 消</el-button>-->
+            <!--<el-button type="primary" @click="dialogTableVisible = false">确 定</el-button>-->
+        </span>
+    </el-dialog>
+
+    <el-dialog title="提示" :visible.sync="dialogFormVisible" width="50%">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="职位名称" prop="name">
+                <el-input v-model="ruleForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="薪资" prop="money">
+                <el-input v-model="ruleForm.money"></el-input>
+            </el-form-item>
+            <el-form-item label="学历要求" prop="edu">
+                <el-input v-model="ruleForm.edu"></el-input>
+            </el-form-item>
+            <el-form-item label="招聘公司" prop="company">
+                <el-input v-model="ruleForm.company"></el-input>
+            </el-form-item>
+            <el-form-item label="公司地址" prop="address">
+                <el-input v-model="ruleForm.address"></el-input>
+            </el-form-item>
+            <el-form-item label="公司logo" prop="img">
+                <el-input v-model="ruleForm.img"></el-input>
+            </el-form-item>
+            <el-form-item label="公司类型" prop="type">
+                <el-input v-model="ruleForm.type"></el-input>
+            </el-form-item>
+            <el-form-item label="职位福利" prop="fare">
+                <el-input v-model="ruleForm.fare"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="submitForm('ruleForm')" >确认修改</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+            <!--<el-button @click="dialogTableVisible = false">取 消</el-button>-->
+            <!--<el-button type="primary" @click="dialogTableVisible = false">确 定</el-button>-->
+        </span>
+    </el-dialog>
+</div>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            checked:false,
+            total: 0,
+            dialogTableVisible: false,
+            dialogFormVisible: false,
+            ruleForm: {
+                name: '',
+                money: '',
+                edu: '',
+                company: '',
+                address: '',
+                img: '',
+                type: '',
+                fare: ''
+
+            },
+            rules: {
+                name: [
+                    { required: true, message: '请输入活动名称', trigger: 'blur' },
+//                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                ],
+                money: [
+                    { required: true, message: '请输入薪资', trigger: 'blur' },
+                ],
+                edu: [
+                    { required: true, message: '请输入学历要求', trigger: 'blur' },
+                ],
+                company: [
+                    { required: true, message: '请输入招聘公司', trigger: 'blur' },
+                ],
+                address: [
+                    { required: true, message: '请输入公司地址', trigger: 'blur' },
+                ],
+                img: [
+                    { required: true, message: '请输入公司logo', trigger: 'blur' },
+                ],
+                type: [
+                    { required: true, message: '请输入公司类型', trigger: 'blur' },
+                ],
+                fare: [
+                    { required: true, message: '请输入职位福利', trigger: 'blur' },
+                ],
+            }
+        },
+        methods: {
+            submitForm:function(formName) {
+                this.$refs[formName].validate(function(valid){
+                    if (valid) {
+//                        this.dialogTableVisible= !this.dialogTableVisible,
+                        alert('提交成功');
+                    } else {
+                        console.log('error submit!!');
+                return false;
+            }
+            });
+            },
+            resetForm:function(formName) {
+                this.$refs[formName].resetFields();
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>

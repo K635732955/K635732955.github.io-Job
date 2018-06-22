@@ -1,0 +1,563 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>言职</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        body{background-color: white}
+        ul{list-style: none;}
+        ul li{float: left}
+        .header_top{height: 30px;background-color: #333;min-width: 1200px;}
+        .header_top .inner{position: relative;max-width: 1340px;margin: 0 auto;display: flex;justify-content: space-between}
+        .header_top .tbar_l{float: left;color:#08d7a2;font-size: 13px;padding:5px 0}
+        .header_top .tbar_l div{float: left;padding: 0 12px;}
+        .header_top .tbar_l img{width: 20px;height: 20px}
+        .header_top .tbar_l .text{color: #c4c3c3;border-left: 1px solid #5d5d5d; }
+        .header_top .tbar_l .text:hover{cursor: pointer;color: white}
+        .header_top .tbar_r span{color: white;font-size:10px}
+        .header_top .tbar_r{color: #c4c3c3;padding:5px 0;margin-right:20px}
+        .header_top .tbar_r ul li{border-left: 1px solid #5d5d5d;width:70px;text-align: center }
+        .header_top .tbar_r ul li:hover{color: white;cursor: pointer}
+        /*----------------------------------------------------------------------*/
+        .header_bot{min-width: 1200px;height: 54px;border-top: 1px solid #d2d2d2;border-bottom: 1px solid #e5e5e5; background-color: #fafafa;}
+        .header_bot .inner{width: 1200px;margin: 0 auto;padding: 0 80px}
+        .header_bot .nav_l{float: left;width: 230px;padding: 10px 0;display: flex;justify-content: space-between}
+        .header_bot .nav_l .text{font-size: 18px;line-height: 44px}
+        .header_bot .nav_l .text span{color: #999;font-size: 12px;cursor: pointer;}
+        .header_bot .nav_r{float: left;width: 400px;font-size:18px;color:#999;padding:15px 0;}
+        .header_bot .nav_r ul{display:flex;justify-content: space-between}
+        .header_bot .nav_r ul li{height:37px}
+        .header_bot .nav_r ul li a{text-decoration: none;color: #999;}
+        .header_bot .nav_r ul li:hover{color: black;border-bottom: 2px solid #00b93d;}
+        /*-------------------------------------------------------------------------------*/
+        .footer{margin-top:30px;width: 100%;min-width: 1024px;background-color: #fff;height:75px;border-top: 1px solid #ebebeb;}
+        .footer .inner{width: 1024px;margin: 0 auto;;padding: 15px 0}
+        .footer img{float: left;width: 198px;height:25px}
+        .footer ul{float: left;text-align: center;margin-left: -10px;padding: 4px 20px}
+        .footer ul li{margin-left:10px;color: #555;font-size: 14px;}
+        .footer .di{color: #d5d5d5;font-size: 13px;width: 100%;text-align: center;}
+        /*--------------------------------------------------------------------------------*/
+        .back{width:1120px;height:100px;position:fixed;text-align: center;font-size:30px;top:590px;z-index: 999}
+        .back .back_one{color:#fe8d0b;width:60px;height: 50%;padding-right: 5px;display: none;position:absolute;right: 0px}
+        .back .back_one:hover{cursor: pointer;opacity: 0.6}
+        .back .back_two{color: #00b38a;width:60px;height: 50%;position:absolute;right: 0px;top: 40px}
+        .back .back_two:hover{cursor: pointer;opacity: 0.6}
+        .back .back_two div{font-size:12px;margin-top: 4px}
+        /*-------------------------------------------------------------------------------*/
+        .user_con{background-color: #333;position: absolute;top: 30px;height:160px;width: 80px;text-align:center;right:33px;color: #c4c3c3;font-size: 15px;}
+        .user_con div{margin-top:10px;width: 100%;}
+        .user_con div:hover{background-color:#474747;color: white;cursor: pointer}
+        /*-------------------------------------------------------------------------------*/
+        .banner{min-width: 1024px;color:white;text-align: center;height:180px;padding-top:30px;background: url("image/banner.jpg") center center no-repeat; }
+        .banner h2{font-size: 30px;font-weight: 700;line-height:10px;}
+        .banner h3{font-size: 26px;line-height:40px;}
+        .city_a{color: #00b38a;border-bottom: 2px solid #00b38a;}
+        .city_b{color: white;}
+        .nav{width: 100%;height: 40px;margin-top: -55px}
+        .nav .title{width:1024px;height: 35px;margin: auto;}
+        .nav .title ul{font-size: 18px;margin-left: -35px;font-weight: 700;cursor: pointer;}
+        .nav .title ul li{height:35px;letter-spacing: 1px;margin-right: 30px;}
+        /*-------------------------------------------------------------------------------*/
+        .box_right{width:250px;height: 100%;float: left;margin-left:24px;}
+        .right_con{width: 100%;height: 450px;text-align: center}
+        .right_con .bta{width: 234px;height: 46px;margin: 25px auto;font-size: 18px;line-height: 46px;color: #fff;border-radius: 3px;background-color: #00b38a;}
+        .right_con .bta:hover{opacity: .8;cursor: pointer}
+        .right_con .btb{width: 234px;height: 46px;margin: 18px auto;font-size: 18px;line-height: 46px;color: #00b38a ;border-radius: 3px;border: 1px solid #00b38a;background-color: transparent;}
+        .right_con .btb:hover{color: #fff;background-color: #00b38a;cursor: pointer;transition: .2s}
+        .right_con .cent{display: flex;justify-content: space-between}
+        .right_con .cent .cent_c{width: 77px;height: 45px;margin-bottom: 8px;}
+        .right_con .cent .cent_c:nth-child(2){border-left: 1px solid #ededed;border-right: 1px solid #ededed;}
+        .right_con .cent .num{font-size: 20px;color: #333;}
+        .right_con .cent .text{font-size: 13px;color: #999;}
+        .right_con .title_one{font-size: 17px;line-height: 28px;height: 30px;color: #333;margin-top:18px}
+        .right_con .title_one img{width: 16px;height: 16px;margin-top: -2px}
+        .right_con .title_two{color: #333;font-size: 14px;line-height: 24px;height: 25px;margin-top: 10px}
+        .right_con .title_three{max-height: 46px;margin-bottom: 20px;font-size: 13px;line-height: 23px;color: #777;margin-top: 10px}
+        .right_con .img{width: 96px;height: 96px;border-radius: 50px}
+        .right_con .edit{position: absolute;color: #00b38a;margin-left:190px;cursor: pointer}
+        /*-------------------------------------------------------------------------------*/
+        .box{width: 100%;height:950px;margin-top:50px}
+        .box_con{width: 1024px;height:100%;margin: auto;}
+        .box_left{width:750px;height: 100%;float: left;box-shadow: 5px 0 5px -5px #ededed;margin-top: -27px}
+        .box_left .talk{width: 710px;border-bottom: 1px solid #ededed;padding:25px 0;}
+        .talk .talk_one{width: 100%;height: 25px;display: flex;justify-content: space-between}
+        .talk_one .quan div{float: left}
+        .talk_one .quan .carr{margin-right:5px;color:#00b38a;border:1px solid #00b38a;line-height:15px;border-radius:15px;text-align: center;padding:1px 8px}
+        .talk_one .quan .carr:hover{color: #ffffff;background-color:#00b38a;cursor: pointer}
+        .talk_one .quan .text,.data{font-size:13px;color: #b1b1b1;line-height:20px}
+        .talk_two{color: #555;max-height: 60px;margin-bottom: 6px;font-size: 20px;line-height: 30px;}
+        .talk_two:hover{color:#00b38a;cursor: pointer}
+        .talk_three{max-height: 48px;margin-bottom: 6px;font-size: 14px;line-height: 24px;color: #555;}
+        .talk_four{height: 22px;line-height: 22px;font-size: 12px;color: #b1b1b1;}
+        .talk_four span:hover{color:#00b38a;cursor: pointer}
+        /*-------------------------------------------------------------------------------*/
+        .box_left .com{width: 710px;height:130px;padding:25px 0;display: flex;justify-content: space-between}
+        .com .com_left{width: 600px;height: 100%;}
+        .com_left img{width: 90px;height: 90px;float: left}
+        .com_left .com_con{float: left;padding: 0 25px}
+        .com_left .name{font-size: 18px;color: #333;height: 25px}
+        .com_left .name:hover{color: #00b38a;cursor: pointer}
+        .com_left .title{height:25px;font-size: 14px;color: #777;cursor: pointer}
+        .com_left .com_bot{font-size: 12px;color: #555;display: flex;justify-content: space-between;width:220px;cursor: pointer}
+        .com_left .com_bot span{color:#00b38a }
+        .com .com_right{width:110px;height: 100%;padding:23px 0}
+        .com_right .gz{font-weight: 600;cursor: pointer;font-size: 15px;line-height: 36px;text-align: center;padding: 0 12px;;float: right;width: 74px;height: 36px;color: white;border-radius: 3px;background-color:#00b38a; }
+        .com_right .ygz{font-weight: 600;cursor: pointer;font-size: 15px;line-height: 36px;text-align: center;padding: 0 12px;;float: right;width: 74px;height: 36px;color: white;border-radius: 3px;background-color:#d5d6da; }
+
+        /*-------------------------------------------------------------------------------*/
+        .box_left .cop{width: 710px;height:130px;padding:25px 0;display: flex;justify-content: space-between}
+        .cop .cop_left{width: 600px;height: 100%;}
+        .cop_left img{width: 90px;height: 90px;float: left}
+        .cop_left .cop_con{float: left;padding: 0 25px}
+        .cop_left .name{font-size: 18px;color: #333;height: 25px}
+        .cop_left .name:hover{color: #00b38a;cursor: pointer}
+        .cop_left .title{height:25px;font-size: 14px;color: #777;cursor: pointer}
+        .cop_left .cop_bot{font-size: 12px;color: #555;display: flex;justify-content: space-between;width:220px;cursor: pointer}
+        .cop_left .cop_bot span{color:#00b38a }
+        .cop .com_right{width:110px;height: 100%;padding:23px 0}
+        .cop_right div{cursor: pointer;font-size: 15px;line-height: 36px;text-align: center;padding: 0 12px;;float: right;width: 74px;height: 36px;color: white;border-radius: 3px;background-color:#00b38a; }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="header_top">
+        <div class="inner">
+            <div class="tbar_l">
+                <div><img src="image/手机.png"> 拉勾APP</div>
+                <div class="text">进入企业版</div>
+            </div>
+            <div class="tbar_r">
+                <ul>
+                    <li style="border: none">消息</li>
+                    <li>我的简历</li>
+                    <li>投递箱</li>
+                    <li>收藏夹</li>
+                    <li @click="user=!user">用户 <span class="glyphicon glyphicon-triangle-bottom"></span></li>
+                </ul>
+            </div>
+            <div class="user_con" v-show="user">
+                <div>我的订阅</div>
+                <div>职位邀请</div>
+                <div>账号设置</div>
+                <div>去企业版</div>
+                <div>退出</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="header_bot">
+        <div class="inner">
+            <div class="nav_l">
+                <img src="image/logo.png">
+            </div>
+            <div class="nav_r">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="job.html">职位</a></li>
+                    <li><a href="company.html">公司</a></li>
+                    <li><a href="school.html">校园</a></li>
+                    <li style="border-bottom: 2px solid #00b93d;"><a href="Talk.html" style="color:black;">言职</a></li>
+                </ul>
+            </div>
+            <div class="back">
+                <div class="back_one" id="back">
+                    <span class="glyphicon glyphicon-plane"></span>
+                </div>
+                <div class="back_two">
+                    <span class=" glyphicon glyphicon-headphones"></span>
+                    <div>联系客服</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="banner">
+        <h2>言职</h2>
+        <h3>更真实的公司点评社区</h3>
+    </div>
+    <div class="nav">
+        <div class="title">
+            <ul>
+               <li v-for="(ex,index) in exs" @click="menu = index"  :class="menu==index ? 'city_a' : 'city_b'">
+                   {{ex.text}}
+               </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box_con">
+            <div class="box_left">
+                <div class="talk" v-for="(talk,index) in talks" v-show="menu==0">
+                    <div class="talk_one">
+                        <div class="quan">
+                            <div class="carr" v-for="car in talk.cars">{{car.text}}</div>
+                            <div class="text"> &nbsp;&nbsp;收到一个新的问题</div>
+                        </div>
+                        <div class="data">{{talk.data}}</div>
+                    </div>
+                    <div class="talk_two">{{talk.text}}</div>
+                    <div class="talk_three">{{talk.wenzi}}</div>
+                    <div class="talk_four"><span>{{talk.numa}}个回答</span> - <span>{{talk.numb}}人关注</span> - <span>分享</span></div>
+                </div>
+                <div class="com" v-for="(com,index) in coms" v-show="menu==1">
+                    <div class="com_left">
+                        <img :src="com.logo">
+                        <div class="com_con">
+                            <div class="name">{{com.name}}</div>
+                            <div class="title">{{com.title}}</div>
+                            <div class="com_bot">
+                                <div><span>{{com.numa}}</span> 个问题</div>
+                                <div><span>{{com.numb}}</span> 个回答</div>
+                                <div><span>{{com.numc}}+</span> 人关注</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="com_right" >
+                        <div class="test">+ 关注</div>
+                    </div>
+                </div>
+                <div class="cop" v-for="(cop,index) in cops" v-show="menu==2">
+                    <div class="cop_left">
+                        <img :src="cop.logo">
+                        <div class="cop_con">
+                            <div class="name">{{cop.name}}</div>
+                            <div class="title">{{cop.title}}</div>
+                            <div class="cop_bot">
+                                <div><span>{{cop.numa}}</span> 个问题</div>
+                                <div><span>{{cop.numb}}</span> 个回答</div>
+                                <div><span>{{cop.numc}}+</span> 人关注</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="com_right" >
+                        <div class="test">+ 关注</div>
+                    </div>
+                </div>
+                <div class="com" v-for="(com,index) in coms" v-show="menu==3">
+                    <div class="com_left">
+                        <img :src="com.logo">
+                        <div class="com_con">
+                            <div class="name">{{com.name}}</div>
+                            <div class="title">{{com.title}}</div>
+                            <div class="com_bot">
+                                <div><span>{{com.numa}}</span> 个问题</div>
+                                <div><span>{{com.numb}}</span> 个回答</div>
+                                <div><span>{{com.numc}}+</span> 人关注</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="com_right" >
+                        <div class="test">+ 关注</div>
+                    </div>
+                </div>
+                <div class="cop" v-for="(cop,index) in cops" v-show="menu==4">
+                    <div class="cop_left">
+                        <img :src="cop.logo">
+                        <div class="cop_con">
+                            <div class="name">{{cop.name}}</div>
+                            <div class="title">{{cop.title}}</div>
+                            <div class="cop_bot">
+                                <div><span>{{cop.numa}}</span> 个问题</div>
+                                <div><span>{{cop.numb}}</span> 个回答</div>
+                                <div><span>{{cop.numc}}+</span> 人关注</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="com_right" >
+                        <div class="test">+ 关注</div>
+                    </div>
+                </div>
+                <div class="com" v-for="(com,index) in coms" v-show="menu==5">
+                    <div class="com_left">
+                        <img :src="com.logo">
+                        <div class="com_con">
+                            <div class="name">{{com.name}}</div>
+                            <div class="title">{{com.title}}</div>
+                            <div class="com_bot">
+                                <div><span>{{com.numa}}</span> 个问题</div>
+                                <div><span>{{com.numb}}</span> 个回答</div>
+                                <div><span>{{com.numc}}+</span> 人关注</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="com_right" >
+                        <div class="test">+ 关注</div>
+                    </div>
+                </div>
+                <div class="cop" v-for="(cop,index) in cops" v-show="menu==6">
+                    <div class="cop_left">
+                        <img :src="cop.logo">
+                        <div class="cop_con">
+                            <div class="name">{{cop.name}}</div>
+                            <div class="title">{{cop.title}}</div>
+                            <div class="cop_bot">
+                                <div><span>{{cop.numa}}</span> 个问题</div>
+                                <div><span>{{cop.numb}}</span> 个回答</div>
+                                <div><span>{{cop.numc}}+</span> 人关注</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="com_right" >
+                        <div class="test">+ 关注</div>
+                    </div>
+                </div>
+            </div>
+            <div class="box_right">
+                <div class="right_con">
+                    <div class="edit"><span class="glyphicon glyphicon-pencil"></span> 编辑</div>
+                    <img src="image/user.png" class="img">
+                    <div class="title_one">金辉 <img src="image/man.png"></div>
+                    <div class="title_two">架构工程师</div>
+                    <div class="title_three">临渊羡鱼，不如退而结网</div>
+                    <div class="cent">
+                        <div class="cent_c">
+                            <div class="num">9</div>
+                            <div class="text">提问</div>
+                        </div>
+                        <div class="cent_c">
+                            <div class="num">9</div>
+                            <div class="text">回答</div>
+                        </div>
+                        <div class="cent_c">
+                            <div class="num">9</div>
+                            <div class="text">获赞</div>
+                        </div>
+                    </div>
+                    <div class="bta">提个问题</div>
+                    <div class="btb">查看更多话题</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="inner">
+            <img src="image/icon.png">
+            <ul>
+                <li>招聘APP</li>
+                <li>招聘微博</li>
+                <li>招聘微信</li>
+                <li>招聘小程序</li>
+                <li>帮助中心</li>
+                <li>联系我们</li>
+                <li>招聘解决方案</li>
+                <li>服务热线: 1234-1234-12（9：00-18：00）</li>
+            </ul>
+            <div class="di"> ©2018 招聘 天软ICP备14023790号-2 天软公网安备 1234567890号 </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            hh:'关注',
+            isActive:true,
+            user:false,
+            menu:0,
+            exs:[
+                {text:'精选'},
+                {text:'公司'},
+                {text:'城市'},
+                {text:'职位'},
+                {text:'行业'},
+                {text:'职场话题'},
+                {text:'产品'}
+            ],
+            talks:[
+                {
+                    cars:[
+                        {text:'运营'}
+                    ],
+                    data:'2017-11-16',
+                    text:'感觉最近运营火了，为什么？',
+                    wenzi:'最近感觉话题渐渐的从产品转到运营了，为什么？真心求教',
+                    numa:19, numb:35,
+                },
+                {
+                    cars:[
+                        {text:'产品经理'},
+                        {text:'Android开发'},
+                        {text:'职业发展'}
+                    ],
+                    data:'2017-11-14',
+                    text:'做了2年安卓开发，想转产品，前景怎么样？',
+                    wenzi:'本人目前安卓开发2年经验，平常看的prd多了，觉得产品是自己喜欢的岗位，但是毕竟前两年都在做开发，现在转行来得及吗？产品这行还有多大前景？',
+                    numa:22, numb:99,
+                },
+                {
+                    cars:[
+                        {text:'产品经理'},
+                        {text:'程序员'}
+                    ],
+                    data:'2017-06-07',
+                    text:'为什么频繁更改需求会另程序员烦恼？',
+                    wenzi:'公司在准备新产品时，总会在邮箱中收到一堆需求邮件，每次都是增加/变更需求，不是说程序员最不喜欢频繁更改需求的吗？',
+                    numa:39, numb:52,
+                },
+                {
+                    cars:[
+                        {text:'设计'},
+                        {text:'前端开发'},
+                        {text:'职业选择'}
+                    ],
+                    data:'2017-17-19',
+                    text:'设计想转前端，需要了解哪些知识？',
+                    wenzi:'做了一年web设计，和前端沟通也比较多，之前有过一些html的经验，想转前端，不知道要到什么程度，才能转做前端？',
+                    numa:51, numb:97,
+                },
+                {
+                    cars:[
+                        {text:'IOS开发'},
+                        {text:'前端开发'}
+                    ],
+                    data:'2017-08-20',
+                    text:'前端转iOS开发，要看什么资料比较好？',
+                    wenzi:'工作刚刚一年，公司有转iOS开发的机会，想尝试一下，最近也在看一些基本的书籍，比如《iOS编程》，对iOS开发有了个初步了解。',
+                    numa:11, numb:39,
+                },
+            ],
+            coms:[
+                {
+                    logo:'image/pic1.jpg',
+                    name:'拉勾网（公司）',
+                    title:'帮用户找到满意的工作',
+                    numa:37, numb:334, numc:10
+                },
+                {
+                    logo:'image/pic2.jpg',
+                    name:'百度(公司)',
+                    title:'众里寻他千百度',
+                    numa:19, numb:192, numc:10
+                },
+                {
+                    logo:'image/pic3.jpg',
+                    name:'腾讯(公司)',
+                    title:'连接一切，从连接人才开始！',
+                    numa:18, numb:96, numc:10
+                },
+                {
+                    logo:'image/pic4.jpg',
+                    name:'小米(公司)',
+                    title:'有些工作只是工作，有些工作是你人生的使命',
+                    numa:16, numb:112, numc:10
+                },
+                {
+                    logo:'image/pic5.jpg',
+                    name:'网易(公司)',
+                    title:'有态度的公司',
+                    numa:16, numb:64, numc:10
+                },
+                {
+                    logo:'image/pic6.jpg',
+                    name:'美团点评(公司)',
+                    title:'中国最大的生活服务业电商平台，在到店餐饮、外卖、电影',
+                    numa:12, numb:31, numc:10
+                },
+                {
+                    logo:'image/pic9.jpg',
+                    name:'阿里巴巴(公司)',
+                    title:'让天下没有难做的生意',
+                    numa:12, numb:98, numc:10
+                },
+            ],
+            cops:[
+                {
+                    logo:'image/pic16.jpg',
+                    name:'滴滴出行(公司)）',
+                    title:'滴滴一下，马上出发，移动互联网让出行更美好',
+                    numa:37, numb:334, numc:10
+                },
+                {
+                    logo:'image/pic15.jpg',
+                    name:'知乎(公司)',
+                    title:'与世界分享你的知识、经验和见解',
+                    numa:19, numb:192, numc:10
+                },
+                {
+                    logo:'image/pic14.jpg',
+                    name:'去哪儿网(公司)',
+                    title:'人生就是一段旅行，不在乎终点，在于沿途的风景。',
+                    numa:18, numb:96, numc:10
+                },
+                {
+                    logo:'image/pic13.jpg',
+                    name:'OPPO(公司)',
+                    title:'邂逅精彩，成就不凡！',
+                    numa:16, numb:112, numc:10
+                },
+                {
+                    logo:'image/pic12.jpg',
+                    name:'聚美优品(公司)',
+                    title:'聚集美丽，成人之美。',
+                    numa:16, numb:64, numc:10
+                },
+                {
+                    logo:'image/pic11.jpg',
+                    name:'百词斩(公司)',
+                    title:'有趣有爱做教育，打造英语大杀器',
+                    numa:12, numb:31, numc:10
+                },
+                {
+                    logo:'image/pic10.jpg',
+                    name:'Uber(公司)',
+                    title:'Uber是您在超过300个城市和25个国家的专属司机',
+                    numa:12, numb:98, numc:10
+                },
+            ],
+        },
+        methods: {
+
+        }
+    });
+</script>
+
+<script>
+    $("#back").click(function () {
+        var speed=500;//滑动的速度
+        $('body,html').animate({ scrollTop: 0 }, speed);
+        return false;
+    });
+</script>
+<script>
+    $(function(){
+        var h3_height = $(".box").offset().top;
+        $(window).scroll(function(){
+            var this_scrollTop = $(this).scrollTop();
+            if(this_scrollTop>h3_height ){
+                $("#back").show(1000);
+            }else{
+                $("#back").hide(1000);
+            }
+        });
+    });
+</script>
+<script>
+    $(function(){
+        $(".test").addClass('gz'); // 初始化时添加背景
+        $(".test").click(function() {
+            $(this).toggleClass('gz').toggleClass('ygz');
+            if($(this).text() == "+ 关注"){
+                $(this).text("已关注");
+            }else{
+                $(this).text("+ 关注");
+
+            }
+        });
+    })
+</script>
+
+
+
+
+
+</html>

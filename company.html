@@ -1,0 +1,609 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>公司</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/swiper.min.js"></script>
+    <script src="js/paging.js"></script>
+    <style>
+        body{background-color: white}
+        ul{list-style: none;}
+        ul li{float: left}
+        .header_top{height: 30px;background-color: #333;min-width: 1200px;}
+        .header_top .inner{position: relative;max-width: 1340px;margin: 0 auto;display: flex;justify-content: space-between}
+        .header_top .tbar_l{float: left;color:#08d7a2;font-size: 13px;padding:5px 0}
+        .header_top .tbar_l div{float: left;padding: 0 12px;}
+        .header_top .tbar_l img{width: 20px;height: 20px}
+        .header_top .tbar_l .text{color: #c4c3c3;border-left: 1px solid #5d5d5d; }
+        .header_top .tbar_l .text:hover{cursor: pointer;color: white}
+        .header_top .tbar_r span{color: white;font-size:10px}
+        .header_top .tbar_r{color: #c4c3c3;padding:5px 0;margin-right:20px}
+        .header_top .tbar_r ul li{border-left: 1px solid #5d5d5d;width:70px;text-align: center }
+        .header_top .tbar_r ul li:hover{color: white;cursor: pointer}
+        /*----------------------------------------------------------------------*/
+        .header_bot{min-width: 1200px;height: 54px;border-top: 1px solid #d2d2d2;border-bottom: 1px solid #e5e5e5; background-color: #fafafa;}
+        .header_bot .inner{width: 1200px;margin: 0 auto;}
+        .header_bot .nav_l{float: left;width: 230px;padding: 10px 0;display: flex;justify-content: space-between}
+        .header_bot .nav_l .text{font-size: 18px;line-height: 44px}
+        .header_bot .nav_l .text span{color: #999;font-size: 12px;cursor: pointer;}
+        .header_bot .nav_r{float: left;width: 400px;font-size:18px;color:#999;padding:15px 0;}
+        .header_bot .nav_r ul{display:flex;justify-content: space-between}
+        .header_bot .nav_r ul li{height:37px}
+        .header_bot .nav_r ul li a{text-decoration: none;color: #999;}
+        .header_bot .nav_r ul li:hover{color: black;border-bottom: 2px solid #00b93d;}
+        /*-------------------------------------------------------------------------------*/
+        .footer{margin-top:60px;width: 100%;min-width: 1024px;background-color: #fff;height:75px;border-top: 1px solid #ebebeb;}
+        .footer .inner{width: 1024px;margin: 0 auto;;padding: 15px 0}
+        .footer img{float: left;width: 198px;height:25px}
+        .footer ul{float: left;text-align: center;margin-left: -10px;padding: 4px 20px}
+        .footer ul li{margin-left:10px;color: #555;font-size: 14px;}
+        .footer .di{color: #d5d5d5;font-size: 13px;width: 100%;text-align: center;}
+        /*--------------------------------------------------------------------------------*/
+        .back{width:1280px;height:100px;position:fixed;text-align: center;font-size:30px;top:590px;z-index: 999}
+        .back .back_one{color:#fe8d0b;width:60px;height: 50%;padding-right: 5px;display: none;position:absolute;right: 0px}
+        .back .back_one:hover{cursor: pointer;opacity: 0.6}
+        .back .back_two{color: #00b38a;width:60px;height: 50%;position:absolute;right: 0px;top: 40px}
+        .back .back_two:hover{cursor: pointer;opacity: 0.6}
+        .back .back_two div{font-size:12px;margin-top: 4px}
+        /*-------------------------------------------------------------------------------*/
+        .user_con{background-color: #333;position: absolute;top: 30px;height:160px;width: 80px;text-align:center;right:33px;color: #c4c3c3;font-size: 15px;}
+        .user_con div{margin-top:10px;width: 100%;}
+        .user_con div:hover{background-color:#474747;color: white;cursor: pointer}
+        /*-------------------------------------------------------------------------------*/
+        .swiper{background-color:#00b38b;width: 100%;height:387px}
+        .swiper_text{width: 100%;height:87px;font-size: 30px;color: #fff;text-shadow: 0 3px 9px rgba(0,0,0,.25);padding: 25px 0 20px;text-align: center;}
+        .swiper_box{width:1120px;height:300px;margin: 0 auto;}
+        .swiper-button-white{position: absolute;padding-left:400px;margin-top:-145px;}
+        .swiper-container{width:1000px;height:100%}
+        .swiper-slide{cursor: pointer;position: relative;z-index: 1}
+        .swiper-slide:hover .out_div{display: block;}
+        .out_div{z-index: 999;display: none;margin-top: 10px;position: absolute;background: rgba(255,255,255,.9);border: 1px solid #03fe56;color: #444;width: 180px;height: 240px;}
+        .out_div .text_out{width: 126px;height: 66px;margin:35px auto;line-height:22px}
+        .out_div .btn{padding: 10px 0;margin-top:38px;margin-left: 26px;border-radius:0px;width: 128px;height: 40px;background-color:#00b38b;color: white}
+        .ins_div{margin:20px 12px;padding:10px;width: 160px;height: 220px;background-color: #ccf0e8}
+        .ins_div img{width: 142px;height: 142px}
+        .ins_div .text_ins{line-height:18px;font-size: 14px;text-align: center;margin-top: 13px}
+        .mouth{position: absolute;bottom:14px;display: flex;justify-content: space-between;width: 100%;text-align: center;font-size: 16px;color: #fff;}
+        .mouth p{line-height: 13px;font-weight: bold;}
+        .mouth span{font-size: 13px;margin-left:1px;margin-top:2px}
+        /*-------------------------------------------------------------------------------*/
+        .wrapper{width: 100%;height: 175px;margin-top:30px}
+        .wrapper .inner{width: 1200px;height: 100%;margin: 0 auto;font-size: 14px;color: #555;}
+        .wrapper .inner .wrapper_top{width: 100%;height:110px;border: 1px solid #ededed;background-color: #fafafa;}
+        .wrapper_con{display: flex;justify-content: space-between;position: relative;z-index: 999}
+        .wrapper_con ul{margin-left: -30px;margin-top:3px}
+        .wrapper_con div{margin-top:4px}
+        .wrapper_top .wrapper_con {padding:2px 15px}
+        .wrapper_top .wrapper_con .glyphicon{color:#00b38b }
+        .wrapper_con {padding:10px 20px}
+        .wrapper_con p{margin-right:11px}
+        .wrapper_con .title{color: #333333;font-weight: 600;float: left}
+        .wrapper_con ul li{padding: 0 10px;cursor: pointer;margin-left:5px}
+        .wrapper_con ul li:hover{background-color:#00b38a;color: white }
+        .wrapper .inner .wrapper_bot{width: 100%;height:43px;margin-top:22px;border: 1px solid #ededed;}
+        .wrapper_bot .glyphicon{font-size:14px}
+        .active{background-color:#00b38a;color: white}
+        /*-------------------------------------------------------------------------------*/
+        .fix{z-index:999;height:60px;width:100%;position: fixed;color: #555;font-size: 14px;display: none}
+        .fix_box{padding:0 30px;line-height: 45px;display: flex;justify-content: space-between;width:1200px;height: 45px;background-color: #fafafa;border: 1px solid #ededed;margin: 0 auto}
+        .fix_l{display: flex;justify-content: space-between;width:480px}
+        .fix_l div{cursor: pointer}
+        /*-------------------------------------------------------------------------------*/
+        .container_one{width: 100%;height:1200px;margin-top:30px;position: relative;z-index: 888}
+        .con_one{width:1230px;height: 100%;margin: 0 auto;}
+        .con_one .firm{margin-left:18px;margin-top:20px;padding:20px 18px 0;width:285px;height: 270px;border: 1px solid #EEE;float: left;text-align: center}
+        .con_one .firm:hover{box-shadow: 0px 0px 7px 2px #eaeeed;cursor: pointer;transition: .2s}
+        .firm .line_one{width: 100%;height: 1px;border-top: 1px dashed #E0E0E0;margin-top:20px}
+        .firm .bot{display: flex;justify-content: space-between;color: #00b38a;margin-top:18px}
+        .firm .bot span{font-size:14px;margin-top:1px;color:#999; }
+        .firm .bot span:hover{cursor: pointer;color: #00b38a}
+        .firm .bot .mid{border-left: 1px solid #E0E0E0;border-right: 1px solid #E0E0E0;width: 90px}
+        .firm img{width: 80px;height: 80px}
+        .firm .texta{font-size:17px;margin-top:8px}
+        .firm .texta:hover{color:#00b38a }
+        .firm .textb{color: #999;font-size: 14px;margin-top:5px}
+        .firm .textc{font-size: 15px;margin-top:3px}
+        /*-------------------------------------------------------------------------------*/
+        .page{width: 100%;height:30px;margin-top: 30px}
+        .page_box{width:1200px;height: 100%;margin:0 auto;}
+        .page_wai{margin: 0 auto;width:420px;}
+        .page_div{font-size: 15px;color: #666666;box-sizing: border-box;}
+        .page_div a{text-decoration: none;min-width: 30px;height: 28px;border: 1px solid #ededed;!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 28px;color: #666666;font-size: 13px;display: inline-block;  }
+        .page_div a:hover{background-color: #00b38a;color: white}
+        #prePage:hover{background-color:#00b38a;color: white}
+        #nextPage:hover{background-color:#00b38a;color: white}
+        #prePage,#nextPage {width: 70px;color:black;border: 1px solid #ededed;!important;}
+        .page_div .current {background-color:#00b38a;border-color: #00b38a;color: #FFFFFF;}
+        /*-------------------------------------------------------------------------------*/
+    </style>
+</head>
+<body >
+<div id="app">
+    <div class="fix" id="fix" >
+        <div class="fix_box">
+            <div class="fix_l">
+                <div>公司地点不限 <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+                <div>融资阶段不限 <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+                <div>行业领域不限 <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+                <div>默认排序 <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+            </div>
+            <div class="fix_r"><input type="checkbox"> 有无面试评价</div>
+        </div>
+    </div>
+
+    <div class="header_top">
+        <div class="inner">
+            <div class="tbar_l">
+                <div><img src="image/手机.png"> 拉勾APP</div>
+                <div class="text">进入企业版</div>
+            </div>
+            <div class="tbar_r">
+                <ul>
+                    <li style="border: none">消息</li>
+                    <li>我的简历</li>
+                    <li>投递箱</li>
+                    <li>收藏夹</li>
+                    <li @click="user=!user">用户 <span class="glyphicon glyphicon-triangle-bottom"></span></li>
+                </ul>
+            </div>
+            <div class="user_con" v-show="user">
+                <div>我的订阅</div>
+                <div>职位邀请</div>
+                <div>账号设置</div>
+                <div>去企业版</div>
+                <div>退出</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="header_bot">
+        <div class="inner">
+            <div class="nav_l">
+                <div><img src="image/logo.png"></div>
+            </div>
+            <div class="nav_r">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="job.html">职位</a></li>
+                    <li style="border-bottom: 2px solid #00b93d;"><a href="company.html" style="color:black;">公司</a></li>
+                    <li><a href="school.html">校园</a></li>
+                    <li><a href="Talk.html">言职</a></li>
+
+                </ul>
+            </div>
+            <div class="back">
+                <div class="back_one" id="back">
+                    <span class="glyphicon glyphicon-plane"></span>
+                </div>
+                <div class="back_two">
+                    <span class=" glyphicon glyphicon-headphones"></span>
+                    <div>联系客服</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="swiper">
+        <div class="swiper_text">什么值得投</div>
+        <div class="swiper_box">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" v-for="(slide,index) in slides">
+                        <div class="out_div">
+                            <div class="text_out">{{slide.textout}}</div>
+                            <div class="btn">进入公司主页</div>
+                        </div>
+                        <div class="ins_div">
+                            <img :src="slide.logo">
+                            <div class="text_ins">{{slide.textins}}</div>
+                        </div>
+                        <div class="mouth">
+                            <p>. . . . . .</p> {{slide.data}}<span class="glyphicon glyphicon-play"></span> <p>. . . . . .</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-next swiper-button-white"></div>
+            <div class="swiper-button-prev swiper-button-white"></div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="inner">
+        <div class="wrapper_top">
+            <div class="wrapper_con">
+                <ul style="margin-top: 5px">
+                    <span class="title">公司地点 :</span>
+                    <li v-for="(city,index) in citys" :class="{'active':inda === index}" @click="changeBga(index)">{{city.text}}</li>
+                </ul>
+                <div>更多 <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+            </div>
+            <div class="wrapper_con">
+                <ul><span class="title">融资阶段 :</span>
+                    <li v-for="(money,index) in moneys" :class="{'active':indb === index}" @click="changeBgb(index)">{{money.text}}</li>
+                </ul>
+            </div>
+            <div class="wrapper_con">
+                <ul><span class="title">行业领域 :</span>
+                    <li v-for="(job,index) in jobs" :class="{'active':indc === index}" @click="changeBgc(index)">{{job.text}}</li>
+                </ul>
+                <div>更多 <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+            </div>
+        </div>
+        <div class="wrapper_bot">
+            <div class="wrapper_con">
+                <ul><span class="title">排序方式 :</span>
+                    <li v-for="(met,index) in mets" :class="{'active':indd === index}" @click="changeBgd(index)">{{met.text}}
+                        <span class="glyphicon glyphicon-arrow-down"></span>
+                    </li>
+                </ul>
+                <p><input type="checkbox"> 有无面试评价</p>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="container_one">
+        <div class="con_one">
+            <div class="firm" v-for="(firm,index) in firms" @click="comcon()">
+                <img :src="firm.logo">
+                <div class="texta">{{firm.name}}</div>
+                <div class="textb">{{firm.lx}} / {{firm.zj}}</div>
+                <div class="textc">{{firm.text}}</div>
+                <div class="line_one"></div>
+                <div class="bot">
+                    <div>{{firm.numa}}<br><span>面试评价</span></div>
+                    <div class="mid">{{firm.numb}}<br><span>在职招聘</span></div>
+                    <div>{{firm.numc}}%<br><span>简历处理率</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="page_box">
+            <div class="page_wai">
+                <div value="1 0"></div>
+                <div id="page" class="page_div"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="inner">
+            <img src="image/icon.png">
+            <ul>
+                <li>招聘APP</li>
+                <li>招聘微博</li>
+                <li>招聘微信</li>
+                <li>招聘小程序</li>
+                <li>帮助中心</li>
+                <li>联系我们</li>
+                <li>招聘解决方案</li>
+                <li>服务热线: 1234-1234-12（9：00-18：00）</li>
+            </ul>
+            <div class="di"> ©2018 招聘 天软ICP备14023790号-2 天软公网安备 1234567890号 </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            inda:0,
+            indb:0,
+            indc:0,
+            indd:0,
+            user:false,
+            slides:[
+                {
+                    textout:'智充科技是国内领先的电动汽车充电设备及能源方案供应商',
+                    logo:'image/pic2.jpg',
+                    textins:'致力服务于冉冉升起的新能源产业',
+                    data:'10/27'
+                },
+                {
+                    textout:'以互联网的视角加速传统教育向个性化教育的变革',
+                    logo:'image/pic3.jpg',
+                    textins:'极客风格的开放式办公氛围',
+                    data:'10/26'
+                },
+                {
+                    textout:'拾梦文化致力于动漫向IP成为全球优秀的动漫向内容和服务提供商',
+                    logo:'image/pic4.jpg',
+                    textins:'以娱乐展示美好',
+                    data:'10/25'
+                },
+                {
+                    textout:'知识付费社群、个性化K12创新教育、硅谷标准团队',
+                    logo:'image/pic5.jpg',
+                    textins:'终身学习、社群学习和个性化学习',
+                    data:'10/24'
+                },
+                {
+                    textout:'联合多家领先服务商，协助品牌打造个性化交易系统，',
+                    logo:'image/pic6.jpg',
+                    textins:'跨屏SaaS建站及综合服务商',
+                    data:'10/23'
+                },
+                {
+                    textout:'专注于为用户提供棋牌、游戏、娱乐等优质的服务和产品',
+                    logo:'image/pic7.jpg',
+                    textins:'立足新起点，开创新局面',
+                    data:'10/22'
+                },
+                {
+                    textout:'集研发、运营、销售为一体的综合性互动娱乐企业',
+                    logo:'image/pic8.jpg',
+                    textins:'理解用户需求，不断推陈出新',
+                    data:'10/21'
+                },
+                {
+                    textout:'一家美妆品牌控股运营公司',
+                    logo:'image/pic9.jpg',
+                    textins:'上市美妆公司',
+                    data:'10/20'
+                },
+                {
+                    textout:'当北京遇上西雅图 - 跨越太平洋的年轻团队在一起奋斗',
+                    logo:'image/pic10.jpg',
+                    textins:'构建混合现实在人类社会中的未来',
+                    data:'10/19'
+                },
+                {
+                    textout:'致力于网络营销推广和计算机互联网信息技术领域',
+                    logo:'image/pic11.jpg',
+                    textins:'以“永远积极，永不放弃” 为信念',
+                    data:'10/18'
+                },
+
+            ],
+            citys:[
+                {text:'全国'},
+                {text:'北京'},
+                {text:'上海'},
+                {text:'深圳'},
+                {text:'广州'},
+                {text:'杭州'},
+                {text:'成都'},
+                {text:'南京'},
+                {text:'武汉'},
+                {text:'西安'},
+                {text:'厦门'},
+                {text:'长沙'},
+                {text:'苏州'},
+                {text:'天津'}
+            ],
+            moneys:[
+                {text:'不限'},
+                {text:'未融资'},
+                {text:'天使轮'},
+                {text:'A轮'},
+                {text:'B轮'},
+                {text:'C轮'},
+                {text:'D轮及以上'},
+                {text:'上市公司'},
+                {text:'不需要融资'}
+            ],
+            jobs:[
+                {text:'不限'},
+                {text:'移动互联网'},
+                {text:'电子商务'},
+                {text:'金融'},
+                {text:'企业服务'},
+                {text:'教育'},
+                {text:'文化娱乐'},
+                {text:'游戏'},
+                {text:'O2O'},
+                {text:'硬件'}
+            ],
+            mets:[
+                {text:'默认排序'},
+                {text:'职位数量'},
+                {text:'面试评价数'},
+                {text:'简历处理率'},
+            ],
+            firms:[
+                {logo:'image/pic12.jpg',
+                    name:'盛大网络',
+                    lx:'游戏，文化娱乐',
+                    zj:'上市公司',
+                    text:'让精彩互联生活无处不在',
+                    numa:'14',numb:'7',numc:'100'
+                },
+                {logo:'image/pic13.jpg',
+                    name:'轩辕传媒',
+                    lx:'企业服务，广告营销',
+                    zj:'不需要融资',
+                    text:'互联网时代广告代理商',
+                    numa:'141',numb:'41',numc:'100'
+                },
+                {logo:'image/pic14.jpg',
+                    name:'谁叫我起床',
+                    lx:'移动互联网，社交网络',
+                    zj:'A轮',
+                    text:'史上最有亲和力的软件',
+                    numa:'91',numb:'5',numc:'100'
+                },
+                {logo:'image/pic15.jpg',
+                    name:'环球网',
+                    lx:'文化娱乐',
+                    zj:'上市公司',
+                    text:'环球网（www.huanqiu.com）',
+                    numa:'113',numb:'47',numc:'100'
+                },
+                {logo:'image/pic16.jpg',
+                    name:'九州医药集团',
+                    lx:'电子商务',
+                    zj:'上市公司',
+                    text:'一家以西药，重要，器械公司',
+                    numa:'22',numb:'33',numc:'71'
+                },
+                {logo:'image/pic1.jpg',
+                    name:'同步推',
+                    lx:'移动互联网',
+                    zj:'上市公司',
+                    text:'公司专注于互联网，移动互联网',
+                    numa:'87',numb:'8',numc:'100'
+                },
+                {logo:'image/pic2.jpg',
+                    name:'微爱',
+                    lx:'移动互联网，社交',
+                    zj:'A轮',
+                    text:'公司在情侣细分市场有3年经验',
+                    numa:'42',numb:'5',numc:'64'
+                },
+                {logo:'image/pic3.jpg',
+                    name:'土拨鼠',
+                    lx:'电子商务',
+                    zj:'B轮',
+                    text:'宁波地区规模最大最具潜力的IT企业',
+                    numa:'93',numb:'17',numc:'100'
+                },
+                {logo:'image/pic4.jpg',
+                    name:'盛大网络',
+                    lx:'游戏，文化娱乐',
+                    zj:'上市公司',
+                    text:'让精彩互联生活无处不在',
+                    numa:'14',numb:'7',numc:'100'
+                },
+                {logo:'image/pic5.jpg',
+                    name:'轩辕传媒',
+                    lx:'企业服务，广告营销',
+                    zj:'不需要融资',
+                    text:'互联网时代广告代理商',
+                    numa:'141',numb:'41',numc:'100'
+                },
+                {logo:'image/pic6.jpg',
+                    name:'谁叫我起床',
+                    lx:'移动互联网，社交网络',
+                    zj:'A轮',
+                    text:'史上最有亲和力的软件',
+                    numa:'91',numb:'5',numc:'100'
+                },
+                {logo:'image/pic7.jpg',
+                    name:'环球网',
+                    lx:'文化娱乐',
+                    zj:'上市公司',
+                    text:'环球网（www.huanqiu.com）',
+                    numa:'113',numb:'47',numc:'100'
+                },
+                {logo:'image/pic8.jpg',
+                    name:'九州医药集团',
+                    lx:'电子商务',
+                    zj:'上市公司',
+                    text:'一家以西药，重要，器械公司',
+                    numa:'22',numb:'33',numc:'71'
+                },
+                {logo:'image/pic9.jpg',
+                    name:'同步推',
+                    lx:'移动互联网',
+                    zj:'上市公司',
+                    text:'公司专注于互联网，移动互联网',
+                    numa:'87',numb:'8',numc:'100'
+                },
+                {logo:'image/pic10.jpg',
+                    name:'微爱',
+                    lx:'移动互联网，社交',
+                    zj:'A轮',
+                    text:'公司在情侣细分市场有3年经验',
+                    numa:'42',numb:'5',numc:'64'
+                },
+                {logo:'image/pic11.jpg',
+                    name:'土拨鼠',
+                    lx:'电子商务',
+                    zj:'B轮',
+                    text:'宁波地区规模最大最具潜力的IT企业',
+                    numa:'93',numb:'17',numc:'100'
+                },
+            ],
+        },
+        methods: {
+            changeBga: function (index) {
+                this.inda = index;
+            },
+            changeBgb: function (index) {
+                this.indb = index;
+            },
+            changeBgc: function (index) {
+                this.indc = index
+            },
+            changeBgd: function (index) {
+                this.indd = index
+            },
+            comcon:function () {
+                window.location.href='company_con.html'
+            }
+        }
+    });
+</script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween:20,
+        slidesPerView: 5,
+        slidesPerGroup: 5,
+        loop:true,
+//        autoplay: 1000,
+
+    });
+</script>
+<script>
+    $("#back").click(function () {
+        var speed=500;//滑动的速度
+        $('body,html').animate({ scrollTop: 0 }, speed);
+        return false;
+    });
+</script>
+<script>
+    $(function(){
+        var h3_height = $(".wrapper").offset().top;
+        $(window).scroll(function(){
+            var this_scrollTop = $(this).scrollTop();
+            if(this_scrollTop>h3_height ){
+                $("#back").show(1000);
+            }else{
+                $("#back").hide(1000);
+            }
+        });
+    });
+    $(function(){
+        var h3_height = $(".container_one").offset().top;
+        $(window).scroll(function(){
+            var this_scrollTop = $(this).scrollTop();
+            if(this_scrollTop>h3_height ){
+                $("#fix").show(1000);
+            }else{
+                $("#fix").hide(1000);
+            }
+        });
+    });
+</script>
+<script>
+    $("#page").paging({
+        pageNo:5,
+        totalPage: 9,
+        totalSize: 300,
+        callback: function(num) {
+
+        }
+    })
+</script>
+
+
+
+
+
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>公司详情页</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/swiper.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+    <style>
+        body{background-color: white}
+        ul{list-style: none;}
+        ul li{float: left}
+        .header_top{height: 30px;background-color: #333;min-width: 1200px;}
+        .header_top .inner{position: relative;max-width: 1340px;margin: 0 auto;display: flex;justify-content: space-between}
+        .header_top .tbar_l{float: left;color:#08d7a2;font-size: 13px;padding:5px 0}
+        .header_top .tbar_l div{float: left;padding: 0 12px;}
+        .header_top .tbar_l img{width: 20px;height: 20px}
+        .header_top .tbar_l .text{color: #c4c3c3;border-left: 1px solid #5d5d5d; }
+        .header_top .tbar_l .text:hover{cursor: pointer;color: white}
+        .header_top .tbar_r span{color: white;font-size:10px}
+        .header_top .tbar_r{color: #c4c3c3;padding:5px 0;margin-right:20px}
+        .header_top .tbar_r ul li{border-left: 1px solid #5d5d5d;width:70px;text-align: center}
+        .header_top .tbar_r ul li:hover{color: white;cursor: pointer}
+        /*----------------------------------------------------------------------*/
+        .header_bot{min-width: 1200px;height: 54px;border-top: 1px solid #d2d2d2;border-bottom: 1px solid #e5e5e5; background-color: #fafafa;}
+        .header_bot .inner{width: 1200px;margin: 0 auto;}
+        .header_bot .nav_l{float: left;width: 230px;padding: 10px 0;display: flex;justify-content: space-between}
+        .header_bot .nav_l .text{font-size: 18px;line-height: 44px}
+        .header_bot .nav_l .text span{color: #999;font-size: 12px;cursor: pointer;}
+        .header_bot .nav_r{float: left;width: 400px;font-size:18px;color:#999;padding:15px 0;}
+        .header_bot .nav_r ul{display:flex;justify-content: space-between}
+        .header_bot .nav_r ul li{height:37px}
+        .header_bot .nav_r ul li a{text-decoration: none;color: #999;}
+        .header_bot .nav_r ul li:hover{color: black;border-bottom: 2px solid #00b93d;}
+        /*-------------------------------------------------------------------------------*/
+        .footer{margin-top:60px;width: 100%;min-width: 1024px;background-color: #fff;height:75px;border-top: 1px solid #ebebeb;}
+        .footer .inner{width: 1024px;margin: 0 auto;;padding: 15px 0}
+        .footer img{float: left;width: 198px;height:25px}
+        .footer ul{float: left;text-align: center;margin-left: -10px;padding: 4px 20px}
+        .footer ul li{margin-left:10px;color: #555;font-size: 14px;}
+        .footer .di{color: #d5d5d5;font-size: 13px;width: 100%;text-align: center;}
+        /*--------------------------------------------------------------------------------*/
+        .back{width:1220px;height:100px;position:fixed;text-align: center;font-size:30px;top:590px;z-index: 999}
+        .back .back_one{color:#fe8d0b;width:60px;height: 50%;padding-right: 5px;display: none;position:absolute;right: 0px}
+        .back .back_one:hover{cursor: pointer;opacity: 0.6}
+        .back .back_two{color: #00b38a;width:60px;height: 50%;position:absolute;right: 0px;top: 40px}
+        .back .back_two:hover{cursor: pointer;opacity: 0.6}
+        .back .back_two div{font-size:12px;margin-top: 4px}
+        /*-------------------------------------------------------------------------------*/
+        .user_con{background-color: #333;position: absolute;top: 30px;height:160px;width: 80px;text-align:center;right:33px;color: #c4c3c3;font-size: 15px;}
+        .user_con div{margin-top:10px;width: 100%;}
+        .user_con div:hover{background-color:#474747;color: white;cursor: pointer}
+        /*-------------------------------------------------------------------------------*/
+        .container_search{width: 100%;height:255px;background-color:#F2F5F4;padding-top:35px}
+        .search_box{width: 1024px;height: 164px;margin: 0 auto;border: 1px solid #eaeaea;background: #fff;}
+        .search_box .img_left{width:165px;height:162px;float: left}
+        .search_box .img_right{width:857px;height:162px;float: left}
+        .img_right .top{width: 100%;height:101px;padding: 1px 20px}
+        .img_right .top .jiaobiao{width:118px;height: 118px;float: right;margin-right:-27px;margin-top:-6px}
+        .img_right .top h3{float: left;color: #333;}
+        .img_right .top h3 span{color:#bfbfbf;font-size: 15px;}
+        .img_right .top_t{width: 100%;height:33px }
+        .img_right .top_t .rz{padding: 6px 12px;margin-left:15px;line-height:60px;color: #fff;background: #00b38a;cursor: pointer;border: 1px solid #00b38a;border-radius: 20px}
+        .img_right .top_b{width: 100%;height: 30px;padding: 5px 0;font-size: 16px}
+        .img_right .bot{width: 100%;height:60px;background: #fafafa;}
+        .img_right .bot ul{padding:13px 0;}
+        .img_right .bot ul li{height: 44px;font-size:15px;color: #555;width: 120px;border-left: 1px solid #ededed;text-align: center;}
+        .img_right .bot ul span{font-size: 12px;color: #b7b7b7;}
+        .search_nav{width: 1024px;height: 54px;margin: 0 auto;}
+        .search_nav .nav_left{width: 550px;height:54px;float: left}
+        .nav_left ul{width: 100%;height: 100%;display: flex;justify-content: space-between;padding:15px 0 0}
+        .nav_left ul li{height: 100%;cursor: pointer}
+        .city_a{color: #333;border-bottom: 2px solid #00b38a;font-size: 18px;}
+        .city_b{color: #999;font-size: 17px;}
+        .search_nav .nav_right{float: left;width:474px;height: 100%;}
+        .nav_right .share{width:130px;height: 50px;float: right;margin-top: 20px}
+        .share span{float: left;line-height: 30px;color: #999;font-size: 13px;margin-right: 10px}
+        .share .share_img{float: left;width: 90px;height: 30px;border: 1px solid #eaeaea;;background-color: white}
+        .share .share_img img{width:18px;height:18px;margin-top:5px;margin-right:3px;margin-left: 5px;cursor: pointer}
+        /*-------------------------------------------------------------------------------*/
+        .container_one{width: 100%;height:2550px;}
+        .con_one{width: 1024px;height: 100%;margin: 40px auto;}
+        .one_right{float: right;width: 250px;height: 100%;}
+        .one_right .basic{width: 100%;height: 231px}
+        .basic .title{font-size: 18px;height: 20px;float: left;}
+        .basic .line_basic{height:1px;background-color:#e8e8e8;width:112px;float: right;margin-left:30px;margin-top: 10px}
+        .basic .text{color: #555}
+        .basic .text span{color:#a0a0a0;font-size:14px;padding-top: 20px;margin-right:15px}
+        .one_right .manager{width: 100%;height: 476px;text-align: center}
+        .manager .title{font-size: 18px;height: 20px;float: left;}
+        .manager .line_basic{height:1px;background-color:#e8e8e8;width:148px;float: right;margin-left:30px;margin-top: 10px}
+        .manager .user{width:118px;height: 118px;border-radius: 80px;margin-top:30px}
+        .manager .ga{margin-top: 20px;font-size: 18px;color: #333;}
+        .manager .ga .xinlang{width:18px;height: 15px; }
+        .manager .gb{margin: 10px auto 15px;font-size: 14px;color: #999;}
+        .manager .gc{margin-bottom:30px;width:250px;height:130px;overflow-y:scroll}
+        .manager .gc::-webkit-scrollbar {/*滚动条整体样式*/ width: 8px; /*高宽分别对应横竖滚动条的尺寸*/}
+        .manager .gc::-webkit-scrollbar-thumb {/*滚动条里面小方块*/ border-radius: 10px;background: #00b38a;}
+        .manager .gc::-webkit-scrollbar-track {/*滚动条里面轨道*/ border-radius: 10px;background: #EDEDED;}
+        .manager .gd{text-align: left;color: #00b38a;font-size: 14px;}
+        .manager .gd:hover{text-decoration: underline;cursor:pointer}
+        .one_right .tags{width: 100%;height: 266px}
+        .tags .title{font-size: 18px;height: 20px;float: left;}
+        .tags .line_basic{height:1px;background-color:#e8e8e8;width:148px;float: right;margin-left:30px;margin-top: 10px}
+        .tags ul{padding:50px 0;text-align: center;}
+        .tags ul li{line-height:25px;padding: 0 12px;border: 1px solid #ededed;border-radius: 15px;height: 25px;margin: 0 10px 10px 0;color: #777;font-size: 12px;}
+        /*-------------------------------------------------------------------------------*/
+        .one_left{box-shadow: 8px 0 4px -4px #f5f5f5;float: left;width: 735px;;height: 100%;margin-top: -2px}
+        .one_left .products{width: 100%;height:743px}
+        .products .title{font-size: 18px;height: 20px;float: left;}
+        .products .line_basic{height:1px;background-color:#e8e8e8;width:600px;float: right;margin-left:30px;margin-top: 12px}
+        .products .con{padding-top:20px;border-bottom: 1px dashed #e5e5e5;width: 100%;height:250px}
+        .products .con:nth-child(4){border: none}
+        .con .img{width: 300px;height: 180px;float: left;text-align: center;padding:30px 0}
+        .con .img img{width: 160px;height: 160px;border-radius:20px}
+        .con .box{width: 365px;height: 180px;float: left;padding:20px 0}
+        .con .box h4{color: #333;font-size: 18px;}
+        .con .box h4:hover{color: #00b88d;cursor: pointer}
+        .con .box h4 span{color:#c9c9c9;font-size: 12px}
+        .con .box ul{padding:1px 0;font-size: 12px;color: #777;}
+        .con .box ul li{padding: 0 10px;border: 1px solid #e5e5e5;border-radius: 15px;margin-right: 15px}
+        .con .text{width:365px;height:100px;overflow-y:scroll}
+        .con .text::-webkit-scrollbar {/*滚动条整体样式*/ width: 8px; /*高宽分别对应横竖滚动条的尺寸*/}
+        .con .text::-webkit-scrollbar-thumb {/*滚动条里面小方块*/ border-radius: 10px;background: #00b38a;}
+        .con .text::-webkit-scrollbar-track {/*滚动条里面轨道*/ border-radius: 10px;background: #EDEDED;}
+        .one_left .intro{width: 100%;height:610px}
+        .intro .title{font-size: 18px;height: 20px;float: left;}
+        .intro .line_basic{height:1px;background-color:#e8e8e8;width:600px;float: right;margin-left:30px;margin-top: 12px}
+        .intro .text{color: #555;font-size: 14px;margin-bottom: 30px;margin-top: 30px;width:710px;height:133px }
+        .swiper{width: 710px;height: 340px;margin-top:60px}
+        .swiper-container{width: 480px;height: 320px;margin:0 auto}
+        .one_left .interview{width: 100%;height:780px}
+        .interview .title{font-size: 18px;height: 20px;float: left;}
+        .interview .line_basic{height:1px;background-color:#e8e8e8;width:600px;float: right;margin-left:30px;margin-top: 12px}
+        .interview .top{width: 710px;height:150px;border-bottom: 1px dashed #dce4e6;}
+        .interview .top .top_t{height:30px;width: 710px;float: left;margin-top:20px;margin-bottom:30px;}
+        .interview .top .top_t .la{margin-right: 10px;color: #333;}
+        .interview .top .top_t .lb{width:120px;height:30px;margin-top: -8px;margin-right:5px}
+        .interview .top .top_t .lc{color: #fd5f39;margin-right: 10px;font-size: 24px;}
+        .interview .top .top_b{width: 710px;height: 20px;float: left;display: flex;justify-content: space-between}
+        .interview .top .top_b div{width:230px;text-align: center;margin-left: -14px;height: 20px}
+        .interview .top .top_b div:nth-child(2){border-left: 1px solid #999;border-right: 1px solid #999;}
+        .interview .top .top_b .ma{margin-right: 8px;color: #999;}
+        .interview .top .top_b .mb{width: 110px;height:25px;margin-right: 10px;margin-top: -5px}
+        .interview .top .top_b .mc{color: #fd5f39;font-size: 14px;}
+        /*-------------------------------------------------------------------------------*/
+        .interview .bot{width: 710px;}
+        .interview .bot .int{width: 710px;height:175px;border-bottom: 1px dashed #dce4e6;padding:20px 0}
+        .int_left{float: left;width: 50px;height:50px;border-radius: 50px}
+        .int_right{float: left;width: 644px;height: 120px;margin-left:15px}
+        .int_right .int_one{width: 100%;height: 21px}
+        .int_one .name{color: #555; font-size: 14px;float: left;margin-right:55px}
+        .int_one .title{color: #999; font-size: 14px;float: left;}
+        .int_one .title img{width: 100px;height:20px;margin-top: -5px;margin-right: 50px}
+        .int_one .jc{color: #555;font-size: 14px;float: left;margin-right: 10px}
+        .int_one .jc:hover{color: #00b38a;cursor: pointer}
+        .int_one .time{float: right;color: #999;font-size: 12px;}
+        .int_right ul{padding:10px 0}
+        .int_right ul li{padding: 1px 10px;margin-right: 10px;border: 1px solid #dce4e6;border-radius: 15px;font-size: 12px;color: #555;}
+        .int_right .text{height: 40px;margin-bottom: 5px;color: #555;font-size: 14px;}
+        .int_right .text span{color: #999;font-size: 14px;}
+        .int_right .num{color: #00b38a;cursor: pointer}
+        .press{margin: 30px auto 0;padding: 8px 15px;width:92px;height:32px;line-height: 14px;text-align: center;border-radius: 4px;color: #00b38a;border: 1px solid #00b38a;}
+        .press:hover{cursor: pointer;background-color:#00b38a;color: white;}
+        /*-------------------------------------------------------------------------------*/
+        .one_left .location{width: 100%;height:371px}
+        .location .title{font-size: 18px;height: 20px;float: left;}
+        .location .line_basic{height:1px;background-color:#e8e8e8;width:600px;float: right;margin-left:30px;margin-top: 12px}
+        .loc_left{width: 448px;height: 290px;float: left;margin-top:50px}
+        .loc_right{width: 258px;height: 290px;float: left;margin-top:50px;padding: 20px 13px;border: 1px solid #ededed;}
+        .loc_right ul{padding: 1px 10px}
+        .loc_right ul li{height:40px;width:100%;padding-bottom: 16px;margin-bottom: 18px;border-bottom: 1px dashed #ededed;}
+        .loc_right ul li div{float: left}
+        .loc_right ul .ys{width:18px;height:18px;background-color:#00b38a;color:white;border-radius: 3px;;text-align: center}
+        .loc_right .loc{max-width: 115px;line-height: 18px;margin-left:12px;vertical-align: middle;font-size: 16px;color: #333;cursor: pointer;}
+        .loc_right .glyphicon{margin-top:5px;color:#25be9a;font-size: 10px;float: right}
+        .ul_bot{text-align: center;font-size: 14px;color: #777;}
+
+    </style>
+
+
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+</head>
+<body>
+<div id="app">
+    <div class="header_top">
+        <div class="inner">
+            <div class="tbar_l">
+                <div><img src="image/手机.png"> 拉勾APP</div>
+                <div class="text">进入企业版</div>
+            </div>
+            <div class="tbar_r">
+                <ul>
+                    <li style="border: none">消息</li>
+                    <li>我的简历</li>
+                    <li>投递箱</li>
+                    <li>收藏夹</li>
+                    <li @click="user=!user">用户 <span class="glyphicon glyphicon-triangle-bottom"></span></li>
+                </ul>
+            </div>
+            <div class="user_con" v-show="user">
+                <div>我的订阅</div>
+                <div>职位邀请</div>
+                <div>账号设置</div>
+                <div>去企业版</div>
+                <div>退出</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="header_bot">
+        <div class="inner">
+            <div class="nav_l">
+                <div><img src="image/logo.png"></div>
+            </div>
+            <div class="nav_r">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="job.html">职位</a></li>
+                    <li style="border-bottom: 2px solid #00b93d;"><a href="company.html" style="color:black;">公司</a></li>
+                    <li><a href="school.html">校园</a></li>
+                    <li><a href="Talk.html">言职</a></li>
+                </ul>
+            </div>
+            <div class="back">
+                <div class="back_one" id="back">
+                    <span class="glyphicon glyphicon-plane"></span>
+                </div>
+                <div class="back_two">
+                    <span class=" glyphicon glyphicon-headphones"></span>
+                    <div>联系客服</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container_search">
+        <div class="search_box">
+            <img src="image/pic9.jpg" class="img_left">
+            <div class="img_right">
+                <div class="top">
+
+                    <div class="top_t">
+                        <h3>搜狐媒体 <span class="glyphicon glyphicon-paperclip"></span></h3>
+                        <span class="rz"><span class="glyphicon glyphicon-edit"></span> JOB认证</span>
+                        <img src="image/角标.png" class="jiaobiao">
+                    </div><br>
+                    <div class="top_b">中国互联网文化运动的先驱、中国综合门户网站的创始者 </div>
+                </div>
+                <div class="bot">
+                    <ul>
+                        <li>
+                            <div>39个</div>
+                            <span>招聘职位 </span><span class="glyphicon glyphicon-paperclip"></span>
+                        </li>
+                        <li>
+                            <div>98%</div>
+                            <span> 简历及时处理率 </span><span class="glyphicon glyphicon-paperclip"></span>
+                        </li>
+                        <li>
+                            <div>1天</div>
+                            <span>简历处理用时 </span><span class="glyphicon glyphicon-paperclip"></span>
+                        </li>
+                        <li>
+                            <div>87个</div>
+                            <span>面试评价 </span><span class="glyphicon glyphicon-paperclip"></span>
+                        </li>
+                        <li>
+                            <div>今天</div>
+                            <span>企业最近登陆 </span><span class="glyphicon glyphicon-paperclip"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="search_nav">
+            <div class="nav_left">
+                <ul>
+                    <li v-for="(na,index) in nas" @click="menu = index"  :class="menu==index ? 'city_a' : 'city_b'">{{na.text}}</li>
+                </ul>
+            </div>
+            <div class="nav_right">
+                <div class="share">
+                    <span>分享</span>
+                    <div class="share_img">
+                        <img src="image/微信.png">
+                        <img src="image/新浪.png">
+                        <img src="image/百度.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container_one">
+        <div class="con_one">
+            <div class="one_left">
+               <div class="products">
+                   <div class="title">公司产品 <div class="line_basic"></div></div>
+                    <div class="con" v-for="(con,index) in cons">
+                        <div class="img">
+                            <img :src="con.img">
+                        </div>
+                        <div class="box">
+                            <h4>{{con.name}} <span class="glyphicon glyphicon-paperclip"></span></h4>
+                            <ul>
+                                <li>{{con.bqa}}</li>
+                                <li>{{con.bqb}}</li>
+                            </ul><br>
+                            <div class="text">{{con.text}}</div>
+                        </div>
+                    </div>
+               </div>
+                <div class="intro">
+                    <div class="title">公司介绍 <div class="line_basic"></div></div><br>
+                    <div class="text">搜狐是中国领先的互联网媒体、搜索、在线游戏集团，拥有搜狐公司（NASDAQ: SOHU）和畅游公司（NASDAQ:CYOU）两家美国纳斯达克上市公司，是中文世界最强劲的互联网品牌之一。“搜狐”在中国是家喻户晓的名字，也是2008北京奥运会互联网内容服务赞助商。搜狐为中国近6亿的互联网和移动互联网用户提供全面网络服务。
+                        <br><br>1999年，搜狐推出新闻及内容频道，奠定了综合门户网站的雏形，开启了中国互联网门户时代。由于张朝阳先生对互联网在中国的传播及商业实践作出的杰出贡献，被美国《时代周刊》评为“全球50位...
+                    </div>
+                    <div class="swiper">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" style="background-image:url(image/top1.jpg);background-size: 100% 100%"></div>
+                            <div class="swiper-slide" style="background-image:url(image/top2.jpg);background-size: 100% 100%"></div>
+                            <div class="swiper-slide" style="background-image:url(image/top3.jpg);background-size: 100% 100%"></div>
+                            <div class="swiper-slide" style="background-image:url(image/top4.jpg);background-size: 100% 100%"></div>
+                            <div class="swiper-slide" style="background-image:url(image/top5.jpg);background-size: 100% 100%"></div>
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+
+                    </div>
+
+
+
+                </div>
+                <div class="interview">
+                    <div class="title">面试评价 <div class="line_basic"></div></div>
+                    <div class="top">
+                        <div class="top_t">
+                            <span class="la">综合评分 : </span>
+                            <img src="image/星星.jpg" class="lb">
+                            <span class="lc">4.4 </span>
+                            <span style="color: #999;">( 来自 80 份评价 )</span>
+                        </div>
+                        <div class="top_b">
+                            <div>
+                                <span class="ma">描述相符</span><img src="image/星星.jpg" class="mb"><span class="mc">4.3</span>
+                            </div>
+                            <div>
+                                <span class="ma">面试官</span><img src="image/星星.jpg" class="mb"><span class="mc">4.2</span>
+                            </div>
+                            <div>
+                                <span class="ma">公司环境</span><img src="image/星星.jpg" class="mb"><span class="mc">4.6</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bot">
+                        <div v-for="(int,index) in ints" class="int">
+                            <img :src="int.img" class="int_left">
+                            <div class="int_right">
+                                <div class="int_one">
+                                    <span class="name">{{int.name}}</span>
+                                    <span class="title">综合评价 : <img src="image/星星.jpg"></span>
+                                    <span class="title">面试职位 : </span>
+                                    <span class="jc">{{int.job}}</span>
+                                    <span class="title">(已下线)</span>
+                                    <span class="time">{{int.time}}</span>
+                                </div>
+                                <ul>
+                                    <li>{{int.ha}}</li>
+                                    <li>{{int.hb}}</li>
+                                </ul><br>
+                                <div class="text"><span>[面试过程]</span> {{int.text}}</div>
+                                <div class="num">有用（{{int.num}}）</div>
+                            </div>
+                        </div>
+                        <div class="press">查看更多</div>
+                    </div>
+                </div>
+                <div class="location">
+                    <div class="title">公司位置 <div class="line_basic"></div></div>
+                        <div class="loc_left">
+                            <div style="width:100%;height:100%;" id="dituContent"></div>
+                        </div>
+                        <div class="loc_right">
+                            <ul>
+                                <li>
+                                    <div class="ys">1</div>
+                                    <div class="loc">北京市，海淀区</div>
+                                    <span class="glyphicon glyphicon-menu-down"></span>
+                                </li>
+                                <li>
+                                    <div class="ys">2</div>
+                                    <div class="loc">北京市，海淀区</div>
+                                    <span class="glyphicon glyphicon-menu-down"></span>
+                                </li>
+                                <li>
+                                    <div class="ys">3</div>
+                                    <div class="loc">北京市，海淀区</div>
+                                    <span class="glyphicon glyphicon-menu-down" ></span>
+                                </li>
+
+                            </ul>
+                            <div class="ul_bot">该公司共有 <span style="color:#00b38a">3</span> 个地址 </div>
+                        </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="one_right">
+                <div class="basic">
+                    <div class="title">公司基本信息 <div class="line_basic"></div></div>
+                    <div style="padding-top: 30px">
+                    <div class="text"><span class="glyphicon glyphicon-th-large"></span> 移动互联网,广告营销</div>
+                    <div class="text"><span class="glyphicon glyphicon-indent-left"></span> 上市公司</div>
+                    <div class="text"><span class="glyphicon glyphicon-user"></span> 2000人以上</div>
+                    <div class="text"><span class="glyphicon glyphicon-map-marker"></span> 北京</div>
+                    </div>
+                </div>
+                <div class="manager">
+                    <div class="title">管理团队 <div class="line_basic"></div></div>
+                    <img src="image/user.png" class="user">
+                    <div class="ga">Hugh Kim <img src="image/新浪.png" class="xinlang"></div>
+                    <div class="gb">董事局主席兼首席执行官</div>
+                    <div class="gc">
+                        Hugh Kim，1994年5月26日出生在吉林省辽源市，
+                        搜狐公司董事局主席兼首席执行官。1986年毕业于清华大学物理系，
+                        并于同年考取李政道奖学金赴美留学。1993年在麻省理工学院获得博士学位后，
+                        在麻省理工学院继续博士后研究。1996年8月手持风险资金，回国创建了爱特信公司
+                        ，公司于1998年正式推出其品牌网站搜狐网，同时更名为搜狐公司。2015年02月11日
+                        ，荣获“2014中国互联网年度人物”。
+                    </div>
+                    <div class="gd">百科任务</div>
+                </div>
+                <div class="tags">
+                    <div class="title">公司标签 <div class="line_basic"></div></div>
+                    <ul>
+                        <li>节日礼物</li>
+                        <li>项目奖金</li>
+                        <li>弹性工作时间</li>
+                        <li>15天年假</li>
+                        <li>绩效奖金</li>
+                        <li>轻松团队氛围 </li>
+                        <li>定期体检</li>
+                        <li>六险一金 </li>
+                        <li>完善培训机制</li>
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <div class="inner">
+            <img src="image/icon.png">
+            <ul>
+                <li>招聘APP</li>
+                <li>招聘微博</li>
+                <li>招聘微信</li>
+                <li>招聘小程序</li>
+                <li>帮助中心</li>
+                <li>联系我们</li>
+                <li>招聘解决方案</li>
+                <li>服务热线: 1234-1234-12（9：00-18：00）</li>
+            </ul>
+            <div class="di"> ©2018 招聘 天软ICP备14023790号-2 天软公网安备 1234567890号 </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            user:false,
+            menu:0,
+            nas:[
+                {text:'公司主页'},
+                {text:'招聘职位（180）'},
+                {text:'校招职位（12）'},
+                {text:'公司问答'}
+            ],
+            cons:[
+                {
+                    img:'image/pic10.jpg',
+                    name: '搜狐新闻客户端' ,
+                    bqa:'客户端', bqb:'移动App',
+                    text:'搜狐新闻客户端是搜狐出品的一款为智能手机用户量身打造的“订阅平台+ 实时新闻”阅读应用，是全国首个提出' +
+                    '个性化阅读服务的新闻客户端。截至2014年5 月底，新闻客户端装机量2.1亿，是中国最大的移动媒体平台。目前新闻客户' +
+                    '端入驻媒体和自媒体总数超过15000 家。新闻客户端4.0 版本开启精准信息流模式。基于搜狐媒体观点的编辑流+ 基于大数据分析系统的推荐流，为网民带来更加精准并有深度的新闻报道。 '
+                },
+                {
+                    img:'image/pic11.jpg',
+                    name: '手机搜狐网' ,
+                    bqa:'客户端', bqb:'网站',
+                    text:'手机搜狐网是基于html5的开放系统，通过强入口（桌面客户端）和弱入口（浏览器、搜索引擎、手机厂商内' +
+                    '置）的形式让亿万手机用户轻松无门槛进入手搜消费内容，手搜将是覆盖所有手机、浏览器最广泛的内容平台之一，目' +
+                    '前已经覆盖国内所有主流浏览器和主流手机。同时，手搜在营销方面具有延展性、可定制化、效果精' +
+                    '准的优势。手搜还是高效的广告平台，有丰富的广告展现形式，灵活的交互机制。 '
+                },
+                {
+                    img:'image/pic12.jpg',
+                    name: '搜狐快站' ,
+                    bqa:'客户端', bqb:'网站',
+                    text:'搜狐快站是继百度siteapp、腾讯风铃后互联网巨头搜狐推出的自助移动建站工具。使用此款建站工具无需技术基础，不' +
+                    '仅能帮助站长拥有自己的移动站点和APP，更能给巨头带来更多的移动端入口资源。 '
+                },
+            ],
+            ints:[
+                {
+                    img:'image/user.png',
+                    name:'匿名',
+                    job: '前端开发工程师',
+                    time:'2017-10-6',
+                    ha:'面试官很nice',hb:'面试效率高',
+                    text:'先笔试后面试，题目都很基础。面试问题很不错，由浅入深，非常灵活。可以学到很多东西。自己发挥的不太好，不然能有更多的互动。',
+                    num:'2'
+                },
+                {
+                    img:'image/user.png',
+                    name:'匿名',
+                    job: 'Python开发工程师',
+                    time:'2017-09-12',
+                    ha:'面试官很nice',hb:'环境高大上',
+                    text:'先做几道笔试题，然后和面试官聊聊笔试题的解法和简历上的东西。对 Python 和 Django 的内部原理聊得比较深，面试官都挺友好',
+                    num:'5'
+                },
+                {
+                    img:'image/user.png',
+                    name:'匿名',
+                    job: '前端开发工程师',
+                    time:'2017-11-11',
+                    ha:'面试官是大牛',hb:'面试效率高',
+                    text:'基础问题，主要是js面向对象的思想我比较弱，看得出做那套题的时候，第一个this指向的题没做好，就看得出基本没希望了，后边是礼节性的提问，好在从这',
+                    num:'3'
+                },
+            ],
+
+
+        },
+        methods: {
+
+        }
+    });
+</script>
+
+<script>
+    $("#back").click(function () {
+        var speed=500;//滑动的速度
+        $('body,html').animate({ scrollTop: 0 }, speed);
+        return false;
+    });
+</script>
+<script>
+    $(function(){
+        var h3_height = $(".container_one").offset().top;
+        $(window).scroll(function(){
+            var this_scrollTop = $(this).scrollTop();
+            if(this_scrollTop>h3_height ){
+                $("#back").show(1000);
+            }else{
+                $("#back").hide(1000);
+            }
+        });
+    });
+</script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        effect: 'fade',
+        loop:true,
+        autoplay: 1000,
+    });
+</script>
+<script type="text/javascript">
+    //创建和初始化地图函数：
+    function initMap(){
+        createMap();//创建地图
+        setMapEvent();//设置地图事件
+        addMapControl();//向地图添加控件
+    }
+
+    //创建地图函数：
+    function createMap(){
+        var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+        var point = new BMap.Point(121.480539,31.235929);//定义一个中心点坐标
+        map.centerAndZoom(point,12);//设定地图的中心点和坐标并将地图显示在地图容器中
+        window.map = map;//将map变量存储在全局
+    }
+
+    //地图事件设置函数：
+    function setMapEvent(){
+        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+        map.enableKeyboard();//启用键盘上下左右键移动地图
+    }
+
+    //地图控件添加函数：
+    function addMapControl(){
+        //向地图中添加缩放控件
+        var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_ZOOM});
+        map.addControl(ctrl_nav);
+        //向地图中添加缩略图控件
+        var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:0});
+        map.addControl(ctrl_ove);
+        //向地图中添加比例尺控件
+        var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT});
+        map.addControl(ctrl_sca);
+    }
+
+
+    initMap();//创建和初始化地图
+</script>
+
+
+
+</html>

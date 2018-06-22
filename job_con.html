@@ -1,0 +1,385 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>职位详情页</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        body{background-color: white}
+        ul{list-style: none;}
+        ul li{float: left}
+        .header_top{height: 30px;background-color: #333;min-width: 1200px;}
+        .header_top .inner{position: relative;max-width: 1340px;margin: 0 auto;display: flex;justify-content: space-between}
+        .header_top .tbar_l{float: left;color:#08d7a2;font-size: 13px;padding:5px 0}
+        .header_top .tbar_l div{float: left;padding: 0 12px;}
+        .header_top .tbar_l img{width: 20px;height: 20px}
+        .header_top .tbar_l .text{color: #c4c3c3;border-left: 1px solid #5d5d5d; }
+        .header_top .tbar_l .text:hover{cursor: pointer;color: white}
+        .header_top .tbar_r span{color: white;font-size:10px}
+        .header_top .tbar_r{color: #c4c3c3;padding:5px 0;margin-right:20px}
+        .header_top .tbar_r ul li{border-left: 1px solid #5d5d5d;width:70px;text-align: center}
+        .header_top .tbar_r ul li:hover{color: white;cursor: pointer}
+        /*----------------------------------------------------------------------*/
+        .header_bot{min-width: 1200px;height: 54px;border-top: 1px solid #d2d2d2;border-bottom: 1px solid #e5e5e5; background-color: #fafafa;}
+        .header_bot .inner{width: 1200px;margin: 0 auto;padding: 0 80px}
+        .header_bot .nav_l{float: left;width: 230px;padding: 10px 0;display: flex;justify-content: space-between}
+        .header_bot .nav_l .text{font-size: 18px;line-height: 44px}
+        .header_bot .nav_l .text span{color: #999;font-size: 12px;cursor: pointer;}
+        .header_bot .nav_r{float: left;width: 400px;font-size:18px;color:#999;padding:15px 0;}
+        .header_bot .nav_r ul{display:flex;justify-content: space-between}
+        .header_bot .nav_r ul li{height:37px}
+        .header_bot .nav_r ul li a{text-decoration: none;color: #999;}
+        .header_bot .nav_r ul li:hover{color: black;border-bottom: 2px solid #00b93d;}
+        /*-------------------------------------------------------------------------------*/
+        .footer{margin-top:60px;width: 100%;min-width: 1024px;background-color: #fff;height:75px;border-top: 1px solid #ebebeb;}
+        .footer .inner{width: 1024px;margin: 0 auto;;padding: 15px 0}
+        .footer img{float: left;width: 198px;height:25px}
+        .footer ul{float: left;text-align: center;margin-left: -10px;padding: 4px 20px}
+        .footer ul li{margin-left:10px;color: #555;font-size: 14px;}
+        .footer .di{color: #d5d5d5;font-size: 13px;width: 100%;text-align: center;}
+        /*--------------------------------------------------------------------------------*/
+        .back{width:1150px;height:100px;position:fixed;text-align: center;font-size:30px;top:590px;z-index: 999}
+        .back .back_one{color:#fe8d0b;width:60px;height: 50%;padding-right: 5px;display: none;position:absolute;right: 0px}
+        .back .back_one:hover{cursor: pointer;opacity: 0.6}
+        .back .back_two{color: #00b38a;width:60px;height: 50%;position:absolute;right: 0px;top: 40px}
+        .back .back_two:hover{cursor: pointer;opacity: 0.6}
+        .back .back_two div{font-size:12px;margin-top: 4px}
+        /*-------------------------------------------------------------------------------*/
+        .user_con{background-color: #333;position: absolute;top: 30px;height:160px;width: 80px;text-align:center;right:33px;color: #c4c3c3;font-size: 15px;}
+        .user_con div{margin-top:10px;width: 100%;}
+        .user_con div:hover{background-color:#474747;color: white;cursor: pointer}
+        /*-------------------------------------------------------------------------------*/
+        .container_search{width: 100%;height:225px;background-color:#F2F5F4;padding-top:30px}
+        .search_box{width: 1024px;height:175px;margin: 0 auto;}
+        .search_left{width: 435px;height: 170px;float: left}
+        .sea_one{margin: -2px 0 6px 0;font-size: 14px;color: #555;height: 22px}
+        .sea_two{font-size: 36px;color: #333;height: 49px;margin: 3px 0}
+        .sea_three{font-size: 18px;color: #555;height: 25px;margin: 3px 0}
+        .sea_three span{color: #fd5f39;}
+        .search_left ul{padding: 0;height: 23px}
+        .search_left ul li{margin-top:5px;height: 20px;margin-right: 8px;padding: 0 10px;line-height: 20px;background-color: #fff;color: #70797b; font-size: 12px; border-radius: 10px;}
+        .sea_four{font-size: 14px;color: #999;}
+        .search_right{width: 264px;height:125px;float: right;margin-top:25px}
+        .y_one{width: 100%;height: 50px}
+        .one_l{border: 1px solid #00b38a;;border-radius: 3px;background-color: #ebf0ef;cursor: pointer;font-size: 14px;color: #00a57f;text-align: center;height: 44px;width: 104px;line-height: 44px;float: left}
+        .one_r{float: right;padding: 0 30px;border: 1px solid #00b38a; border-radius: 3px;height: 44px;line-height: 44px;font-size: 18px;background-color: #00b38a;color: #fff;cursor: pointer;}
+        .y_two{width: 100%;height: 30px;font-size: 14px;color: #555;margin-top:10px;}
+        .two_l{float: left;text-decoration: underline;cursor: pointer;margin-left:30px}
+        .two_l:hover{color: #00b38a}
+        .two_r{float: right;text-decoration: underline;cursor: pointer}
+        .two_r:hover{color: #00b38a}
+        .y_three{width: 125px;height: 25px;float: right;margin-top: 5px;}
+        .y_three img{width: 19px;height:18px;margin-left:10px;float: right}
+        /*-------------------------------------------------------------------------------*/
+        .container_one{width: 100%;height:1000px;}
+        .con_one{width: 1024px;height: 100%;margin: 40px auto;}
+        .one_left{box-shadow: 8px 0 4px -4px #f5f5f5;float: left;width: 735px;;height: 100%;}
+        .left_top{width: 700px;height:670px;float: left}
+        .top_text{padding-right: 10px}
+        .top_text span{color: #00b38a}
+        .top_text span:hover{text-decoration: underline;cursor: pointer}
+        .top_text h4{font-size: 16px;color: #333;font-weight: 700;}
+        .top_text p{margin-top: 13px;color: #333;}
+        .left_mid{width: 700px;height:170px;float: left}
+        .left_mid h4{font-size: 16px;color: #333;font-weight: 700;}
+        .mid_left{width:190px;height:98px;float: left;}
+        .mid_left .mid_img{width: 60px;height: 60px;border-radius: 50px;float: left}
+        .mid_left_text{float: left; font-size: 18px;color: #333;margin-left: 5px;padding-top:8px}
+        .mid_left .xx{width:17px;height:17px;margin-top: -5px}
+        .mid_left_text span{font-size: 14px;color: #999;}
+        .mid_right{width: 464px;height:98px;float: right;display: flex;justify-content: space-between;text-align: center}
+        .mid_r_text{width:150px;height:60px}
+        .mid_r_text:nth-child(2){border-left: 1px solid #f3f3f3;border-right: 1px solid #f3f3f3}
+        .mid_r_text span{color: #fd5f38;}
+        .mid_r_text .glyphicon{width: 15px;height: 16px;color:#b4b4b4}
+        .mid_r_text div:nth-child(1){font-size: 14px;color: #555;}
+        .mid_r_text div:nth-child(2){font-size: 16px;color: #333;margin-bottom: 2px;}
+        .mid_r_text div:nth-child(3){font-size: 12px;color: #999;}
+        .left_bot{width: 700px;height:130px;float: left}
+        .left_bot .title{font-size: 18px;height: 20px;float:left;}
+        .left_bot .line_basic{height:1px;background-color:#e8e8e8;width:590px;float: right;margin-left:30px;margin-top: 12px}
+        .left_bot .left_bot_box{font-size:14px;color: #555;width:370px;margin:70px auto 0}
+        .left_bot_box span{color: #00b38a;cursor: pointer}
+        .one_right{float: right;width: 250px;height: 100%;}
+        .right_top{width: 245px;height: 300px;float: left}
+        .right_top .text{color: #555}
+        .right_top .text span{color:#a0a0a0;font-size:14px;padding-top:20px;margin-right:15px}
+        .top_t{width: 100%;height: 125px}
+        .top_t img{width: 100px;height: 100px;float: left}
+        .top_t div{float: left;margin-left: 21px;font-size: 18px;line-height: 18px;color: #555;margin-top:78px}
+        .top_t div span{color: #00b38a; font-size: 14px;}
+        .right_bot{width: 245px;height: 530px;float:left}
+        .right_bot .title{font-size: 18px;height: 20px;float:left;}
+        .right_bot .line_basic{height:1px;background-color:#e8e8e8;width:140px;float: right;margin-left:30px;margin-top: 12px}
+        .job{width: 242px;vertical-align: top;border-bottom: 1px dashed #e5e5e5;height:85px;padding: 12px 0}
+        .job:hover{background-color:#fafafa;cursor: pointer}
+        .job img{width: 60px;height: 60px;float: left}
+        .job .job_r{float: left;width:180px;padding: 0 14px;}
+        .job_r .name{color: #333;font-size: 16px;}
+        .job_r .money{color: #e6775c;font-size: 16px;}
+        .job_r .bot{font-size: 12px;color: #999;}
+        .look{width: 242px;height: 35px;line-height: 35px;background: #fafafa;text-align: center;color: #555}
+        .look:hover{color: #00b38a;cursor: pointer}
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="header_top">
+        <div class="inner">
+            <div class="tbar_l">
+                <div><img src="image/手机.png"> 拉勾APP</div>
+                <div class="text">进入企业版</div>
+            </div>
+            <div class="tbar_r">
+                <ul>
+                    <li style="border: none">消息</li>
+                    <li>我的简历</li>
+                    <li>投递箱</li>
+                    <li>收藏夹</li>
+                    <li @click="user=!user">用户 <span class="glyphicon glyphicon-triangle-bottom"></span></li>
+                </ul>
+            </div>
+            <div class="user_con" v-show="user">
+                <div>我的订阅</div>
+                <div>职位邀请</div>
+                <div>账号设置</div>
+                <div>去企业版</div>
+                <div>退出</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="header_bot">
+        <div class="inner">
+            <div class="nav_l">
+                <div><img src="image/logo.png"></div>
+            </div>
+            <div class="nav_r">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="job.html">职位</a></li>
+                    <li><a href="company.html">公司</a></li>
+                    <li><a href="school.html">校园</a></li>
+                    <li><a href="Talk.html">言职</a></li>
+                </ul>
+            </div>
+            <div class="back">
+                <div class="back_one" id="back">
+                    <span class="glyphicon glyphicon-plane"></span>
+                </div>
+                <div class="back_two">
+                    <span class=" glyphicon glyphicon-headphones"></span>
+                    <div>联系客服</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container_search">
+        <div class="search_box">
+            <div class="search_left">
+                <div class="sea_one">搜狐媒体新闻客户端招聘</div>
+                <div class="sea_two">高级Java开发工程师</div>
+                <div class="sea_three"><span>20k-35k</span> /北京 / 经验3-5年 / 本科及以上 / 全职</div>
+                <ul>
+                    <li>JAVA</li><li>MySQL</li><li>大数据</li><li>redis</li><li>架构</li>
+                </ul>
+                <div class="sea_four">1天前  发布于JOB网</div>
+            </div>
+            <div class="search_right">
+                <div class="y_one">
+                    <div class="one_l"><span class="glyphicon glyphicon-star-empty"></span> 收藏</div>
+                    <div class="one_r">投个简历</div>
+                </div>
+                <div class="y_two">
+                    <div class="two_l"><span class="glyphicon glyphicon-list-alt"></span> 在线简历</div>
+                    <div class="two_r"><span class="glyphicon glyphicon-paperclip"></span> 上传附件简历</div>
+                </div>
+                <div class="y_three">
+                    <img src="image/微信.png">
+                    <img src="image/新浪.png">
+                    <img src="image/百度.png">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container_one">
+        <div class="con_one">
+            <div class="one_left">
+                <div class="left_top">
+                    <div class="top_text">
+                        <h4>职位诱惑:</h4>
+                        <p>公司平台大，六险一金</p>
+                        <br><h4>职位描述:</h4>
+                        <p>1、负责新闻客户端核心业务开发和应用架构规划、设计及编码实现；</p>
+                        <p>2、协同他人组织跨团队沟通协作，确保服务设计合理、进度和质量控制；</p>
+                        <p>任职资格</p>
+                        <p>1、JAVA基础扎实：熟练掌握数据结构、多线程编程，掌握常用的设计模式</p>
+                        <p>2、熟悉JVM，包括内存模型、类加载机制以及性能优化；</p>
+                        <p>3、3年及以上服务器端相关开发经验，精通spring mvc、orm框架（ibatis或mybatis）主流开源框架及原理；</p>
+                        <p>4、熟悉 mongo,redis、kafka、zookeeper、dubbo等中间件；</p>
+                        <p>5、熟悉Linux环境开发，了解常用SHELL命令；</p>
+                        <p>6、熟悉分布式、缓存、消息(RabbitMQ、kafka、rocketmq其中两种)、搜索等，机制者优先，熟悉SOA架构者优先；</p>
+                        <p>7、熟悉数据库设计和优化，了解常用的数据库如MYSQL；有NoSQL 数据库使用经验者优先；</p>
+                        <p>8、有大型系统设计和开发经验，尤其在有大数据量、高并发产品经验者优先。</p>
+                        <p>9、技术视野开阔，学习和抗压能力好，有很强的分析和解决复杂问题的能力，具备良好的沟通和组织协调能力。</p>
+                        <br><h4>工作地址:</h4>
+                        <p><span>北京</span> - <span>海淀区</span> - 北京市海淀区科学院南路2号院融科资讯中心3号楼搜狐媒体大厦  <span style="float: right">查看地图</span></p>
+                    </div>
+                </div>
+                <div class="left_mid">
+                    <h4>职位发布者:</h4>
+                    <div class="mid_left">
+                        <img src="image/pic4.jpg" class="mid_img">
+                        <div class="mid_left_text">
+                            小米科技HR <img src="image/消息.png" class="xx"><br>
+                            <span>小米科技</span>
+                        </div>
+                    </div>
+                    <div class="mid_right">
+                        <div class="mid_r_text">
+                            <div class="text_top">聊天意愿<span class=" glyphicon glyphicon-flash"></span></div>
+                            <div>暂无</div>
+                            <div>回复率--  用时<span>14</span>分钟 </div>
+                        </div>
+                        <div class="mid_r_text">
+                            <div class="text_top">简历处理<span class=" glyphicon glyphicon-flash"></span></div>
+                            <div>超快</div>
+                            <div>处理率<span>100%</span>  用时<span>1</span>天 </div>
+                        </div>
+                        <div class="mid_r_text">
+                            <div class="text_top">活跃时段<span class=" glyphicon glyphicon-flash"></span></div>
+                            <div>早上</div>
+                            <div>早<span>6</span>点最活跃</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="left_bot">
+                    <div class="title">面试评价 <div class="line_basic"></div></div>
+                    <div class="left_bot_box">该职位尚未收到面试评价 ,看看该公司<span>其他职位的面试评价</span></div>
+                </div>
+            </div>
+            <div class="one_right">
+                <div class="right_top">
+                    <div class="top_t">
+                        <img src="image/pic11.jpg">
+                        <div>搜狐媒体 <span class="glyphicon glyphicon-check"></span></div>
+                    </div>
+                    <div class="text" style="margin-top: -10px"><span class="glyphicon glyphicon-th-large"></span> 移动互联网,广告营销</div>
+                    <div class="text"><span class="glyphicon glyphicon-indent-left"></span> 上市公司</div>
+                    <div class="text"><span class="glyphicon glyphicon-user"></span> 2000人以上</div>
+                    <div class="text"><span class="glyphicon glyphicon-map-marker"></span> http://www.sohu.com</div>
+                </div>
+                <div class="right_bot">
+                    <div class="title">相似职位 <div class="line_basic"></div></div>
+                    <div style="margin-top:43px">
+                    <div v-for="(job,index) in jobs" class="job">
+                        <img :src="job.logo">
+                        <div class="job_r">
+                            <div class="name">{{job.name}}</div>
+                            <div class="money">{{job.money}}</div>
+                            <div class="bot">{{job.com}} [{{job.location}}]</div>
+                        </div>
+                    </div>
+                    <div class="look">查看更多相似职位 <span class="glyphicon glyphicon-menu-right"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="inner">
+            <img src="image/icon.png">
+            <ul>
+                <li>招聘APP</li>
+                <li>招聘微博</li>
+                <li>招聘微信</li>
+                <li>招聘小程序</li>
+                <li>帮助中心</li>
+                <li>联系我们</li>
+                <li>招聘解决方案</li>
+                <li>服务热线: 1234-1234-12（9：00-18：00）</li>
+            </ul>
+            <div class="di"> ©2018 招聘 天软ICP备14023790号-2 天软公网安备 1234567890号 </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            user:false,
+            jobs:[
+                {
+                  logo:'image/pic15.jpg',
+                  name:'JAVA高级研发工程师',
+                  money:'20K-35k',
+                  com:'谦逊时代',location:'北京.望京'
+                },
+                {
+                    logo:'image/pic11.jpg',
+                    name:'高级JAVA开发工程师',
+                    money:'20K-35k',
+                    com:'七号考拉',location:'北京.东城'
+                },
+                {
+                    logo:'image/pic3.jpg',
+                    name:'后台高级前端工程师',
+                    money:'20K-35k',
+                    com:'腾讯科技',location:'北京.望京'
+                },
+                {
+                    logo:'image/pic10.jpg',
+                    name:'JAVA高级研发工程师',
+                    money:'10K-35k',
+                    com:'京东商城',location:'北京.西城'
+                },
+                {
+                    logo:'image/pic12.jpg',
+                    name:'前端工程师',
+                    money:'20K-35k',
+                    com:'小米科技',location:'北京.玄武'
+                },
+
+            ]
+        },
+        methods:{
+
+        }
+    });
+</script>
+
+<script>
+    $("#back").click(function () {
+        var speed=500;//滑动的速度
+        $('body,html').animate({ scrollTop: 0 }, speed);
+        return false;
+    });
+</script>
+<script>
+    $(function(){
+        var h3_height = $(".container_one").offset().top;
+        $(window).scroll(function(){
+            var this_scrollTop = $(this).scrollTop();
+            if(this_scrollTop>h3_height ){
+                $("#back").show(1000);
+            }else{
+                $("#back").hide(1000);
+            }
+        });
+    });
+</script>
+
+
+
+
+
+</html>
